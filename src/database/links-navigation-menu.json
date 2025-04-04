@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Shop",
+        "href": "/shop"
+    },
+    {
+        "name": "On Sale",
+        "href": "/on-sale"
+    },
+    {
+        "name": "Serviços",
+        "href": "/services"
+    },
+    {
+        "name": "New Arrivals",
+        "href": "/arrivals"
+    },
+    {
+        "name": "Brands",
+        "href": "/brands"
+    }
+]

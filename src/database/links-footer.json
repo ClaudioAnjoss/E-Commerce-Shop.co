@@ -1,0 +1,29 @@
+[
+    {
+      "category": "Company",
+      "content": ["About", "Features", "Works", "Career"]
+    },
+    {
+      "category": "Help",
+      "content": [
+        "Customer Support",
+        "Delivery Details",
+        "Terms & Conditions",
+        "Privacy Policy"
+      ]
+    },
+    {
+      "category": "FAQ",
+      "content": ["Account","Manage Deliveries", "Orders", "Payments"]
+    },
+    {
+      "category": "Resources",
+      "content": [
+        "Free eBooks",
+        "Development Tutorial",
+        "How to - Blog",
+        "Youtube Playlist"
+      ]
+    }
+  ]
+  
