@@ -1,15 +1,57 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family: 'Integral CF';
+  src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Integral CF';
+  src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-extrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+
 
 @custom-variant dark (&:is(.dark *));
 
 body, html, *, button {
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
 }
 
 :root {
+   /* Fonts - Integral CF */
+   --font-integral-light: 'Integral CF', sans-serif;
+   --font-integral-regular: 'Integral CF', sans-serif;
+   --font-integral-medium: 'Integral CF', sans-serif;
+   --font-integral-bold: 'Integral CF', sans-serif;
+   --font-integral-extrabold: 'Integral CF', sans-serif;
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
@@ -119,8 +161,38 @@ body, html, *, button {
 @layer base {
   * {
     @apply border-border outline-ring/50;
+
+    @layer utilities {
+      .font-integral-light {
+        font-family: var(--font-integral-light);
+        font-weight: 300;
+      }
+    
+      .font-integral-regular {
+        font-family: var(--font-integral-regular);
+        font-weight: 400;
+      }
+    
+      .font-integral-medium {
+        font-family: var(--font-integral-medium);
+        font-weight: 500;
+      }
+    
+      .font-integral-bold {
+        font-family: var(--font-integral-bold);
+        font-weight: 700;
+      }
+    
+      .font-integral-extrabold {
+        font-family: var(--font-integral-extrabold);
+        font-weight: 800;
+      }
+    }
   }
   body {
     @apply bg-background text-foreground;
+
+    
   }
 }
+
