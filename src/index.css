@@ -2,35 +2,35 @@
 @import "tw-animate-css";
 
 @font-face {
-  font-family: 'Integral CF';
+  font-family: 'Integral CF Light';
   src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Integral CF';
+  font-family: 'Integral CF Regular';
   src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Integral CF';
+  font-family: 'Integral CF Medium';
   src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Integral CF';
+  font-family: 'Integral CF Bold';
   src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Integral CF';
+  font-family: 'Integral CF ExtraBold';
   src: url('./fonts/integral-cf/Fontspring-DEMO-integralcf-extrabold.otf') format('opentype');
   font-weight: 800;
   font-style: normal;
@@ -46,12 +46,13 @@ body, html, *, button {
 
 :root {
    /* Fonts - Integral CF */
-   --font-integral-light: 'Integral CF', sans-serif;
-   --font-integral-regular: 'Integral CF', sans-serif;
-   --font-integral-medium: 'Integral CF', sans-serif;
-   --font-integral-bold: 'Integral CF', sans-serif;
-   --font-integral-extrabold: 'Integral CF', sans-serif;
+   --font-integral-light: 'Integral CF Light', sans-serif;
+  --font-integral-regular: 'Integral CF Regular', sans-serif;
+  --font-integral-medium: 'Integral CF Medium', sans-serif;
+  --font-integral-bold: 'Integral CF Bold', sans-serif;
+  --font-integral-extrabold: 'Integral CF ExtraBold', sans-serif;
 
+  --gray-main: #F2F0F1;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
@@ -87,6 +88,7 @@ body, html, *, button {
 }
 
 .dark {
+  --gray-main: #F2F0F1;
   --background: oklch(0.147 0.004 49.25);
   --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(0.216 0.006 56.043);
@@ -121,6 +123,7 @@ body, html, *, button {
 }
 
 @theme inline {
+  --gray-main: #F2F0F1;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
