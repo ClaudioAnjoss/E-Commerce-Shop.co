@@ -14,7 +14,8 @@ import calvin from '@/assets/brands/calvin-klein.png'
 import ClothingList from '@/components/clothing-list'
 import { clothingItems } from '@/database/clothes'
 import { Separator } from '@/components/ui/shadcn/separator'
-import { Check, MoveLeft, MoveRight, Star } from 'lucide-react'
+import { MoveLeft, MoveRight } from 'lucide-react'
+import CardRating from '@/components/card-rating'
 
 export default function Home() {
   return (
@@ -74,9 +75,17 @@ export default function Home() {
         <img src={calvin} alt="calvin" />
       </div>
 
-      <ClothingList title="NEW ARRIVALS" items={clothingItems} />
+      <ClothingList
+        title="NEW ARRIVALS"
+        items={clothingItems}
+        button="View All"
+      />
       <Separator className="my-20 container mx-auto" />
-      <ClothingList title="top selling" items={clothingItems} />
+      <ClothingList
+        title="top selling"
+        items={clothingItems}
+        button="View All"
+      />
 
       <Container classname="my-10 bg-[#F2F0F1] rounded-3xl p-6 flex flex-col gap-8">
         <h1 className="leading-8 text-center text-[32px] px-4 sm:text-5xl font-integral-bold ">
@@ -133,40 +142,18 @@ export default function Home() {
       </div>
 
       <div className="relative overflow-hidden my-10">
-        <div className="hidden md:flex pointer-events-none absolute left-0 top-0 h-full w-42 z-10 bg-gradient-to-r from-white/80 to-transparent backdrop-blur-[2px]" />
+        <div className="hidden md:flex pointer-events-none absolute left-0 top-0 h-full w-20 z-10 bg-gradient-to-r from-white/80 to-transparent backdrop-blur-[2px]" />
         <div className="hidden md:flex pointer-events-none absolute right-0 top-0 h-full w-42 z-10 bg-gradient-to-l from-white/80 to-transparent backdrop-blur-[2px]" />
 
         <div
-          className="flex gap-4 overflow-x-auto scroll-smooth px-4 "
+          className="flex gap-4 overflow-x-auto scroll-smooth sm:pl-20 "
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
           }}
         >
           {Array.from({ length: 10 }).map((_, index) => (
-            <div
-              key={index}
-              className="border p-8 flex-shrink-0 flex flex-col gap-4 w-[350px] md:w-[400px] rounded-3xl bg-white"
-            >
-              <span className="flex">
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-              </span>
-
-              <h1 className="text-2xl font-bold">
-                Sarah M. <Check />
-              </h1>
-
-              <p>
-                &quot;I&apos;m blown away by the quality and style of the
-                clothes I received from Shop.co. From casual wear to elegant
-                dresses, every piece I&apos;ve bought has exceeded my
-                expectations.”
-              </p>
-            </div>
+            <CardRating key={index} />
           ))}
         </div>
       </div>

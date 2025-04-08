@@ -11,6 +11,8 @@ import Arrivals from './pages/arrivals'
 import Brands from './pages/brands'
 
 import './index.css'
+import Product from './pages/product'
+import ChooseProduct from './pages/choose-product'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -18,7 +20,10 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<Structure />}>
           <Route index element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop" element={<Shop />}>
+            <Route index element={<ChooseProduct />} />
+            <Route path=":id" element={<Product />} />
+          </Route>
           <Route path="/on-sale" element={<OnSale />} />
           <Route path="/services" element={<ServicePage />} />
           <Route path="/arrivals" element={<Arrivals />} />
