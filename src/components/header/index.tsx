@@ -5,6 +5,7 @@ import { Search, ShoppingCart } from 'lucide-react'
 
 import logo from '@/assets/SHOP.CO.png'
 import { Input } from '../ui/shadcn/input'
+import { HeaderCollapse } from './header-collapse'
 
 export default function Header() {
   return (
@@ -24,6 +25,8 @@ export default function Header() {
             </Link>
           ))}
         </div>
+
+        <HeaderCollapse />
 
         <Input
           id="search"

@@ -1,6 +1,7 @@
 import { iClothingItem } from '@/database/clothes'
 import Container from '../container'
 import { Button } from '../ui/shadcn/button'
+import Title from '../title'
 
 interface iClothingListProps {
   title?: string
@@ -14,9 +15,9 @@ export default function ClothingList({
   items,
 }: iClothingListProps) {
   return (
-    <Container classname="flex flex-col gap-8 max-w-screen">
-      <h1 className="text-5xl text-center font-integral-bold">{title}</h1>
-      <div className="flex gap-4 px-2 overflow-x-auto ">
+    <Container classname="flex flex-col max-w-screen gap-4 pb-4">
+      {title && <Title className="mx-auto">{title}</Title>}
+      <div className="flex gap-4 overflow-x-auto ">
         {items.map(({ id, name, description, price, imageUrl }) =>
           Array.from({ length: 3 }).map((_, index) => (
             <div

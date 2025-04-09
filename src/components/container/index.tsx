@@ -6,5 +6,5 @@ interface iContainer {
 }
 
 export default function Container({ classname, children }: iContainer) {
-  return <div className={`container mx-auto ${classname}`}>{children}</div>
+  return <div className={`container mx-auto  ${classname}`}>{children}</div>
 }

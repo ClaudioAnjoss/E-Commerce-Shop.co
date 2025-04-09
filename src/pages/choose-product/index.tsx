@@ -10,10 +10,16 @@ import {
   PaginationPrevious,
 } from '@/components/ui/shadcn/pagination'
 import { MenuDrawer } from './menu-drawer'
+import { FilteredProducts } from './filtered-product'
+import { Link } from 'react-router'
 
 export default function ChooseProduct() {
   return (
-    <>
+    <section className="grid md:grid-cols-[200px_1fr] gap-4">
+      <div className="hidden md:block md:col-span-1 md:row-span-2">
+        <FilteredProducts accordionOpen />
+      </div>
+
       <div className="flex items-center justify-between">
         <span className="flex items-end gap-2">
           <h1 className="font-semibold text-2xl">Casual</h1>
@@ -21,12 +27,12 @@ export default function ChooseProduct() {
             Showing 1-10 of 100 Products
           </span>
         </span>
-        <MenuDrawer />
+        <MenuDrawer className="md:hidden" />
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4 min-h-[50dvh]">
         {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index}>
+          <Link to={`${index}`} key={index}>
             <div className="max-w-[172px] h-[174px] bg-[#F0EEED] rounded-4xl overflow-hidden">
               <img src={camisa} alt="" />
             </div>
@@ -50,7 +56,7 @@ export default function ChooseProduct() {
                 -40%
               </span>
             </div>
-          </div>
+          </Link>
         ))}
 
         <Pagination>
@@ -78,6 +84,6 @@ export default function ChooseProduct() {
           </PaginationContent>
         </Pagination>
       </div>
-    </>
+    </section>
   )
 }

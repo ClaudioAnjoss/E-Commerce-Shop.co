@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "daisyui";
 
 @font-face {
   font-family: 'Integral CF Light';
@@ -36,6 +37,23 @@
   font-style: normal;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
 
 
 @custom-variant dark (&:is(.dark *));
@@ -45,6 +63,9 @@ body, html, *, button {
 }
 
 :root {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
    /* Fonts - Integral CF */
    --font-integral-light: 'Integral CF Light', sans-serif;
   --font-integral-regular: 'Integral CF Regular', sans-serif;
@@ -88,6 +109,8 @@ body, html, *, button {
 }
 
 .dark {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --gray-main: #F2F0F1;
   --background: oklch(0.147 0.004 49.25);
   --foreground: oklch(0.985 0.001 106.423);
@@ -123,6 +146,8 @@ body, html, *, button {
 }
 
 @theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --gray-main: #F2F0F1;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

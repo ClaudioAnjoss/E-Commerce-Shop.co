@@ -15,7 +15,7 @@ export default function CardRating() {
         Sarah M. <Check />
       </h1>
 
-      <p className="md:max-w-80">
+      <p className="max-w-[320px] line-clamp-3">
         &quot;I&apos;m blown away by the quality and style of the clothes I
         received from Shop.co. From casual wear to elegant dresses, every piece
         I&apos;ve bought has exceeded my expectations.”

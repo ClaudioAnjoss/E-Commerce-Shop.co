@@ -13,6 +13,7 @@ import Brands from './pages/brands'
 import './index.css'
 import Product from './pages/product'
 import ChooseProduct from './pages/choose-product'
+import CartPage from './pages/cart'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/services" element={<ServicePage />} />
           <Route path="/arrivals" element={<Arrivals />} />
           <Route path="/brands" element={<Brands />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
