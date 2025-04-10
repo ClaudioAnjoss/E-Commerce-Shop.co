@@ -8,13 +8,30 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/shadcn/tabs'
-import { clothingItems } from '@/database/clothes'
+import { iProduct } from '@/interfaces/iProduct'
+import { getById } from '@/services/get-by-id'
 import { SlidersVertical } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
 
 export default function Product() {
+  const [product, setProduct] = useState<iProduct>()
+  const { id } = useParams()
+
+  console.log(product)
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getById(Number(id))
+      setProduct(res)
+    }
+
+    fetchData()
+  }, [id])
+
   return (
     <>
-      <ProductDetails />
+      {product && <ProductDetails {...product} />}
 
       <Tabs defaultValue="rating" className="w-full">
         <TabsList className="w-full flex justify-between bg-transparent">
@@ -68,7 +85,7 @@ export default function Product() {
         <TabsContent value="rating" className=" flex flex-col gap-4 ">
           <div className="flex items-center justify-between">
             <h1 className="font-semibold text-[20px]">
-              All Reviews <span>(451)</span>
+              All Reviews <span>({product?.reviews.length})</span>
             </h1>
             <Button
               className="rounded-full bg-gray-100 border-none"
@@ -79,8 +96,8 @@ export default function Product() {
             </Button>
           </div>
           <div className="grid md:grid-cols-2 items-center gap-4 max-h-[92vh] overflow-auto">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <CardRating key={index} />
+            {product?.reviews.map((data, index) => (
+              <CardRating key={index} {...data} />
             ))}
           </div>
           <Button
@@ -129,7 +146,7 @@ export default function Product() {
       <section className="grid">
         <h1 className="text-[32px] font-integral-bold">You might also like</h1>
         <div>
-          <ClothingList items={clothingItems} />
+          <ClothingList category="sports-accessories" />
         </div>
       </section>
     </>

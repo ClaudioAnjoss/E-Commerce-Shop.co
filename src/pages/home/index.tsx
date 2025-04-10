@@ -1,4 +1,3 @@
-import { clothingItems } from '@/database/clothes'
 import { Separator } from '@/components/ui/shadcn/separator'
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { Brands } from '@/components/brands'
@@ -22,14 +21,14 @@ export default function Home() {
 
       <Container>
         <ClothingList
-          title="NEW ARRIVALS"
-          items={clothingItems}
+          title="mens-shirts"
+          category="mens-shirts"
           button="View All"
         />
         <Separator className="container mx-auto" />
         <ClothingList
-          title="top selling"
-          items={clothingItems}
+          title="mens-shoes"
+          category="mens-shoes"
           button="View All"
         />
 
@@ -71,7 +70,7 @@ export default function Home() {
           }}
         >
           {Array.from({ length: 10 }).map((_, index) => (
-            <CardRating key={index} />
+            <CardRating rating={4.2} />
           ))}
         </div>
       </div>

@@ -1,19 +1,23 @@
-import { Star } from 'lucide-react'
 import { Button } from '../ui/shadcn/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Separator } from '../ui/shadcn/separator'
+import { iProduct } from '@/interfaces/iProduct'
+import Rating from '../rating'
 
-const images: string[] = [
-  'https://loja.comerciomix.com.br/media/catalog/product/cache/fb4f878514d02efd710032ded901d118/a/m/amarela1_1.png',
-  'https://d5gag3xtge2og.cloudfront.net/producao/35059465/G/m_0103_13000640906.png',
-  'https://lojapalmeiras.vtexassets.com/arquivos/ids/187134-800-auto?v=638657302347100000&width=800&height=auto&aspect=true',
-  'https://loja.comerciomix.com.br/media/catalog/product/cache/fb4f878514d02efd710032ded901d118/a/m/amarela1_1.png',
-  'https://d5gag3xtge2og.cloudfront.net/producao/35059465/G/m_0103_13000640906.png',
-  'https://lojapalmeiras.vtexassets.com/arquivos/ids/187134-800-auto?v=638657302347100000&width=800&height=auto&aspect=true',
-]
+export default function ProductDetails({
+  title,
+  rating,
+  price,
+  discountPercentage,
+  description,
+  images,
+  thumbnail,
+}: iProduct) {
+  const [selectedImage, setSelectedImage] = useState('colocar loading')
 
-export default function ProductDetails() {
-  const [selectedImage, setSelectedImage] = useState(images[0])
+  useEffect(() => {
+    setSelectedImage(thumbnail)
+  }, [thumbnail])
 
   return (
     <section className="grid md:grid-cols-2 gap-4">
@@ -21,7 +25,7 @@ export default function ProductDetails() {
         <div className="col-span-full md:order-2 bg-[#F0EEED] rounded-4xl w-full h-[290px] md:h-[370px]">
           <img
             src={selectedImage}
-            alt=""
+            alt={title}
             className="w-full h-full object-contain"
           />
         </div>
@@ -50,29 +54,21 @@ export default function ProductDetails() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-integral-bold">
-          One Life Graphic T-shirt
-        </h1>
-        <span className="flex items-center">
-          <Star color="yellow" cursor={'pointer'} />
-          <Star color="yellow" />
-          <Star color="yellow" />
-          <Star color="yellow" />
-          <Star color="yellow" />
-        </span>
+        <h1 className="text-2xl font-integral-bold">{title}</h1>
+
+        <Rating ratingValue={rating} />
 
         <div className="text-2xl flex items-center gap-2">
-          <span className="font-semibold">$260 </span>
-          <span className="font-semibold text-gray-400 line-through">$300</span>
+          <span className="font-semibold">${price} </span>
+          <span className="font-semibold text-gray-400 line-through">
+            {((price * discountPercentage) / 100).toFixed(2)}
+          </span>
           <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2">
-            -40%
+            -{discountPercentage}%
           </span>
         </div>
 
-        <p className="text-sm">
-          This graphic t-shirt which is perfect for any occasion. Crafted from a
-          soft and breathable fabric, it offers superior comfort and style.
-        </p>
+        <p className="text-sm">{description}</p>
 
         <Separator />
 
