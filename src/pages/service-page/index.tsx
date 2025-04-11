@@ -1,66 +1,12 @@
-import { useEffect, useState } from 'react'
-
-interface IReview {
-  rating: number
-  comment: string
-  date: string
-  reviewerName: string
-  reviewerEmail: string
-}
-
-interface IDimensions {
-  width: number
-  height: number
-  depth: number
-}
-
-interface IMeta {
-  createdAt: string
-  updatedAt: string
-  barcode: string
-  qrCode: string
-}
-
-interface IFetchData {
-  id: number
-  title: string
-  description: string
-  category: string
-  price: number
-  discountPercentage: number
-  rating: number
-  stock: number
-  tags: string[]
-  brand: string
-  sku: string
-  weight: number
-  dimensions: IDimensions
-  warrantyInformation: string
-  shippingInformation: string
-  availabilityStatus: string
-  reviews: IReview[]
-  returnPolicy: string
-  minimumOrderQuantity: number
-  meta: IMeta
-  images: string[]
-  thumbnail: string
-}
+import { getByParams } from '@/services/get-by-params'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ServicePage() {
-  const [products, setProducts] = useState<IFetchData[]>([])
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['produtos'],
+    queryFn: () => getByParams('category/womens-bags'),
+  })
 
-  console.log(products)
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(
-        'https://dummyjson.com/products/category/womens-bags',
-      )
-      const json = await res.json()
-      setProducts(json.products) // a API retorna { products: [...] }
-    }
-    fetchData()
-  }, [])
   return (
     <div style={{ padding: '2rem' }}>
       <h1>📦 Lista de Produtos</h1>
@@ -71,7 +17,8 @@ export default function ServicePage() {
           gap: '1.5rem',
         }}
       >
-        {products.length > 0 &&
+        {isLoading && <div>Carregando</div>}
+        {Array.isArray(products) &&
           products.map((product) => (
             <div
               key={product.id}

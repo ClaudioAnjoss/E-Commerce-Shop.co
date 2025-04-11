@@ -3,54 +3,63 @@ import { useEffect, useState } from 'react'
 import { Separator } from '../ui/shadcn/separator'
 import { iProduct } from '@/interfaces/iProduct'
 import Rating from '../rating'
+import { Lens } from '../ui/magic-ui/lens'
 
 export default function ProductDetails({
+  id,
   title,
   rating,
   price,
   discountPercentage,
   description,
   images,
-  thumbnail,
 }: iProduct) {
-  const [selectedImage, setSelectedImage] = useState('colocar loading')
+  const [selectedImage, setSelectedImage] = useState('')
+
+  console.log(id)
 
   useEffect(() => {
-    setSelectedImage(thumbnail)
-  }, [thumbnail])
+    setSelectedImage(images[0])
+  }, [images])
 
   return (
     <section className="grid md:grid-cols-2 gap-4">
       <div className="grid gap-4 md:grid-cols-2">
         <div className="col-span-full md:order-2 bg-[#F0EEED] rounded-4xl w-full h-[290px] md:h-[370px]">
-          <img
-            src={selectedImage}
-            alt={title}
-            className="w-full h-full object-contain"
-          />
+          <Lens>
+            <div className="bg-[#F0EEED] rounded-4xl w-full h-[290px] md:h-[370px] ">
+              <img
+                src={selectedImage}
+                alt={title}
+                className="w-full h-full object-contain "
+              />
+            </div>
+          </Lens>
         </div>
 
-        <div
-          className="md:py-2 md:col-end-1 md:order-1 flex md:flex-col md:max-h-[370px] items-center gap-4 overflow-auto"
-          style={{ scrollbarWidth: 'none' }}
-        >
-          {images.map((data, index) => (
-            <span
-              className={`flex-1 min-w-[110px] sm:max-w-[110px] h-[106px] md:min-h-[106px]
+        {images.length > 1 && (
+          <div
+            className="md:py-2 md:col-end-1 md:order-1 flex md:flex-col md:max-h-[370px] items-center gap-4 overflow-auto"
+            style={{ scrollbarWidth: 'none' }}
+          >
+            {images.map((data, index) => (
+              <span
+                className={`flex-1 min-w-[110px] sm:max-w-[110px] h-[106px] md:min-h-[106px]
                  bg-[#F0EEED] rounded-4xl cursor-pointer
                 ${selectedImage === data ? 'border border-black' : ''}
                 `}
-              key={index}
-              onClick={() => setSelectedImage(data)}
-            >
-              <img
-                src={data}
-                alt={`Thumbnail ${data}`}
-                className="w-full h-full object-cover"
-              />
-            </span>
-          ))}
-        </div>
+                key={index}
+                onClick={() => setSelectedImage(data)}
+              >
+                <img
+                  src={data}
+                  alt={`Thumbnail ${data}`}
+                  className="w-full h-full object-cover"
+                />
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-4">

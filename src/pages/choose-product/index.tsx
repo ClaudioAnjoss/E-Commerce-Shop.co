@@ -1,85 +1,116 @@
-import { Star } from 'lucide-react'
-import camisa from '@/assets/clothes/camisa-preta.png'
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from '@/components/ui/shadcn/pagination'
 import { MenuDrawer } from './menu-drawer'
 import { FilteredProducts } from './filtered-product'
 import { Link } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import { getByParams } from '@/services/get-by-params'
+import Rating from '@/components/rating'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/shadcn/button'
+import { Skeleton } from '@/components/ui/shadcn/skeleton'
+import { IProductResponse } from '@/interfaces/iCategory'
 
 export default function ChooseProduct() {
+  const [pagination, setPagination] = useState(0)
+  const [category, setCategory] = useState('tops')
+  const { data: filteredProducts, isLoading } = useQuery<IProductResponse>({
+    queryKey: ['filtered-products', category, pagination],
+    queryFn: () =>
+      getByParams(
+        `/category/${category}?limit=20&skip=${pagination}`,
+      ) as Promise<IProductResponse>,
+  })
+
+  console.log(filteredProducts)
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 120,
+      behavior: 'smooth',
+    })
+  }, [filteredProducts])
+
   return (
     <section className="grid md:grid-cols-[200px_1fr] gap-4">
       <div className="hidden md:block md:col-span-1 md:row-span-2">
-        <FilteredProducts accordionOpen />
+        <FilteredProducts
+          accordionOpen
+          onCategoryClick={(value) => setCategory(value)}
+        />
       </div>
 
       <div className="flex items-center justify-between">
         <span className="flex items-end gap-2">
           <h1 className="font-semibold text-2xl">Casual</h1>
           <span className="text-sm font-light">
-            Showing 1-10 of 100 Products
+            Showing {filteredProducts?.limit} of {filteredProducts?.total}{' '}
+            Products
           </span>
         </span>
         <MenuDrawer className="md:hidden" />
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 min-h-[50dvh]">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <Link to={`${index}`} key={index}>
-            <div className="max-w-[172px] h-[174px] bg-[#F0EEED] rounded-4xl overflow-hidden">
-              <img src={camisa} alt="" />
+        {filteredProducts &&
+          filteredProducts.products.map(
+            ({ id, title, rating, price, discountPercentage, thumbnail }) => (
+              <Link to={String(id)} key={id} className="max-w-[300px]">
+                <div className="w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
+                  <img src={thumbnail} alt={title} />
+                </div>
+
+                <h1>{title}</h1>
+
+                <Rating ratingValue={rating} />
+
+                <div className="text-[20px] flex items-center gap-2 max-w-[250px]  line-clamp-1">
+                  <span className="font-semibold">${price.toFixed(2)} </span>
+                  <span className="font-semibold text-gray-400 line-through">
+                    ${((price * discountPercentage) / 100).toFixed(2)}
+                  </span>
+                  <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2 line-clamp-1">
+                    -{discountPercentage}%
+                  </span>
+                </div>
+              </Link>
+            ),
+          )}
+
+        {isLoading &&
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="flex flex-col space-y-3">
+              <Skeleton className="h-[250px] w-[300px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
             </div>
-
-            <h1>Gradient Graphic T-shirt</h1>
-
-            <span className="flex items-center">
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} />
-              <Star size={16} />
-            </span>
-
-            <div className="text-[20px] flex items-center gap-2">
-              <span className="font-semibold">$260 </span>
-              <span className="font-semibold text-gray-400 line-through">
-                $300
-              </span>
-              <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2">
-                -40%
-              </span>
-            </div>
-          </Link>
-        ))}
+          ))}
 
         <Pagination>
-          <PaginationContent>
+          <PaginationContent className="flex justify-around  w-full">
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <Button
+                variant={'outline'}
+                onClick={() => setPagination((prev) => prev - 20)}
+                disabled={pagination <= 0}
+              >
+                Previous
+              </Button>
             </PaginationItem>
+
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <Button
+                variant={'outline'}
+                onClick={() => setPagination((prev) => prev + 20)}
+                disabled={pagination >= Number(filteredProducts?.total) - 20}
+              >
+                Next
+              </Button>
             </PaginationItem>
           </PaginationContent>
         </Pagination>

@@ -1,10 +1,12 @@
 import Container from '../container'
 import { Button } from '../ui/shadcn/button'
 import Title from '../title'
-import { useEffect, useState } from 'react'
-import { getByCategory } from '@/services/get-by-category'
+
 import { Link } from 'react-router'
-import { iProduct } from '@/interfaces/iProduct'
+import SkeletonClothing from './skeleton-clothing-list'
+import { useQuery } from '@tanstack/react-query'
+import { getByParams } from '@/services/get-by-params'
+import { iCategory } from '@/interfaces/iCategory'
 
 interface iClothingListProps {
   title?: string
@@ -17,30 +19,24 @@ export default function ClothingList({
   category,
   button,
 }: iClothingListProps) {
-  const [items, setItems] = useState<iProduct[]>([])
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await getByCategory(category)
-
-      setItems(Array.isArray(res) ? res : [res])
-    }
-
-    fetchData()
-  }, [category])
+  const { data: categorys, isLoading } = useQuery<iCategory>({
+    queryKey: [category],
+    queryFn: () => getByParams(`category/${category}`) as Promise<iCategory>,
+  })
 
   return (
     <Container classname="flex flex-col max-w-screen gap-4 pb-4">
       {title && <Title className="mx-auto">{title.replace('-', ' ')}</Title>}
+
       <div className="flex gap-4 overflow-x-auto ">
-        {items.length > 0 &&
-          items.map(({ id, title, description, price, thumbnail }) => (
+        {categorys?.products.map(
+          ({ id, title, description, price, thumbnail }) => (
             <div
               key={id}
-              className="cursor-pointer  flex flex-col p-2 max-w-[300px]"
+              className="cursor-pointer flex flex-col p-2 max-w-[300px]"
             >
               <Link to={`/shop/${id}`}>
-                <div className=" bg-[#F0EEED] rounded-3xl min-w-[300px] overflow-hidden">
+                <div className="bg-[#F0EEED] rounded-3xl min-w-[300px] overflow-hidden">
                   <img
                     src={thumbnail}
                     alt={title}
@@ -52,6 +48,12 @@ export default function ClothingList({
                 <span className="font-bold text-lg">${price}</span>
               </Link>
             </div>
+          ),
+        )}
+
+        {isLoading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <SkeletonClothing key={index} />
           ))}
       </div>
       {button && (

@@ -13,6 +13,19 @@ import category4 from '@/assets/categorys/image-4.png'
 import CategoryCard from './category-card'
 
 export default function Home() {
+  const randomCategory = [
+    'mens-shirts',
+    'mens-shoes',
+    'mens-watches',
+    'sports-accessories',
+    'sunglasses',
+    'womens-bags',
+    'womens-dresses',
+    'womens-jewellery',
+    'womens-shoes',
+    'womens-watches',
+  ].sort(() => 0.5 - Math.random())[0]
+
   return (
     <section className="grid">
       <BannerHome />
@@ -20,15 +33,11 @@ export default function Home() {
       <Brands />
 
       <Container>
-        <ClothingList
-          title="mens-shirts"
-          category="mens-shirts"
-          button="View All"
-        />
+        <ClothingList title="tops" category="tops" button="View All" />
         <Separator className="container mx-auto" />
         <ClothingList
-          title="mens-shoes"
-          category="mens-shoes"
+          title={randomCategory}
+          category={randomCategory}
           button="View All"
         />
 
@@ -70,7 +79,14 @@ export default function Home() {
           }}
         >
           {Array.from({ length: 10 }).map((_, index) => (
-            <CardRating rating={4.2} />
+            <CardRating
+              key={index}
+              comment="Irei melhorar esse card"
+              date="hoje memso"
+              reviewerEmail="sei la"
+              reviewerName="Abotito"
+              rating={4.2}
+            />
           ))}
         </div>
       </div>

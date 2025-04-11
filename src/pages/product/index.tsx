@@ -9,29 +9,36 @@ import {
   TabsTrigger,
 } from '@/components/ui/shadcn/tabs'
 import { iProduct } from '@/interfaces/iProduct'
-import { getById } from '@/services/get-by-id'
+import { getByParams } from '@/services/get-by-params'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { SlidersVertical } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
 export default function Product() {
-  const [product, setProduct] = useState<iProduct>()
   const { id } = useParams()
+  const queryClient = useQueryClient()
 
-  console.log(product)
+  const { data: product, isFetching } = useQuery<iProduct>({
+    queryKey: ['product'],
+    queryFn: () => getByParams(`/${id}`) as Promise<iProduct>,
+    enabled: !!id,
+  })
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await getById(Number(id))
-      setProduct(res)
+    if (id) {
+      queryClient.invalidateQueries({ queryKey: ['product'] })
     }
 
-    fetchData()
-  }, [id])
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [id, queryClient])
 
   return (
     <>
-      {product && <ProductDetails {...product} />}
+      {product && !isFetching && <ProductDetails {...product} />}
 
       <Tabs defaultValue="rating" className="w-full">
         <TabsList className="w-full flex justify-between bg-transparent">
@@ -145,9 +152,7 @@ export default function Product() {
 
       <section className="grid">
         <h1 className="text-[32px] font-integral-bold">You might also like</h1>
-        <div>
-          <ClothingList category="sports-accessories" />
-        </div>
+        <div>{product && <ClothingList category={product?.category} />}</div>
       </section>
     </>
   )

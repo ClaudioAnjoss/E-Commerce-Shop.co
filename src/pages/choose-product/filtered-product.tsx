@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/shadcn/separator'
 import { Slider } from '@/components/ui/shadcn/slider'
 import TitleDrawer from './title-drawer'
 import AccordionDrawer from './accordion-drawer'
+import { categories } from '@/database/categories'
 
 const colors = [
   'bg-slate-500',
@@ -30,11 +31,13 @@ const sizes = [
 interface iFilteredProducts {
   accordionOpen?: boolean
   isDrawer?: boolean
+  onCategoryClick?: (category: string) => void
 }
 
 export function FilteredProducts({
   accordionOpen,
   isDrawer,
+  onCategoryClick,
 }: iFilteredProducts) {
   return (
     <div className="p-4 flex flex-col gap-4">
@@ -49,7 +52,17 @@ export function FilteredProducts({
 
       <Separator />
 
-      <div className="flex flex-col gap-2">
+      {categories.map((data) => (
+        <button
+          key={data}
+          onClick={() => onCategoryClick?.(data)}
+          className="flex items-center justify-between"
+        >
+          {data.toUpperCase()} <ChevronRight />
+        </button>
+      ))}
+
+      {/* <div className="flex flex-col gap-2">
         <span className="flex items-center justify-between">
           T-shirts <ChevronRight />
         </span>
@@ -62,10 +75,7 @@ export function FilteredProducts({
         <span className="flex items-center justify-between">
           T-shirts <ChevronRight />
         </span>
-        <span className="flex items-center justify-between">
-          T-shirts <ChevronRight />
-        </span>
-      </div>
+      </div> */}
 
       <Separator />
 

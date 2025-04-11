@@ -42,4 +42,5 @@ export interface iProduct {
   meta: IMeta
   images: string[]
   thumbnail: string
+  isLoading?: boolean
 }
