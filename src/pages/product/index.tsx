@@ -21,7 +21,7 @@ export default function Product() {
 
   const { data: product, isFetching } = useQuery<iProduct>({
     queryKey: ['product'],
-    queryFn: () => getByParams(`/${id}`) as Promise<iProduct>,
+    queryFn: () => getByParams(`product/${id}`) as Promise<iProduct>,
     enabled: !!id,
   })
 

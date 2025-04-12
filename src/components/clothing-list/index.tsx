@@ -1,12 +1,11 @@
 import Container from '../container'
 import { Button } from '../ui/shadcn/button'
 import Title from '../title'
-
 import { Link } from 'react-router'
 import SkeletonClothing from './skeleton-clothing-list'
 import { useQuery } from '@tanstack/react-query'
 import { getByParams } from '@/services/get-by-params'
-import { iCategory } from '@/interfaces/iCategory'
+import { IResponse } from '@/interfaces/IResponse'
 
 interface iClothingListProps {
   title?: string
@@ -19,9 +18,10 @@ export default function ClothingList({
   category,
   button,
 }: iClothingListProps) {
-  const { data: categorys, isLoading } = useQuery<iCategory>({
+  const { data: categorys, isLoading } = useQuery<IResponse>({
     queryKey: [category],
-    queryFn: () => getByParams(`category/${category}`) as Promise<iCategory>,
+    queryFn: () =>
+      getByParams(`product/category/${category}`) as Promise<IResponse>,
   })
 
   return (
@@ -29,7 +29,7 @@ export default function ClothingList({
       {title && <Title className="mx-auto">{title.replace('-', ' ')}</Title>}
 
       <div className="flex gap-4 overflow-x-auto ">
-        {categorys?.products.map(
+        {categorys?.products?.map(
           ({ id, title, description, price, thumbnail }) => (
             <div
               key={id}

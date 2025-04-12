@@ -56,7 +56,7 @@ export function FilteredProducts({
         <button
           key={data}
           onClick={() => onCategoryClick?.(data)}
-          className="flex items-center justify-between"
+          className="flex items-center justify-between text-sm cursor-pointer hover:bg-gray-100 hover:scale-105 transition-transform"
         >
           {data.toUpperCase()} <ChevronRight />
         </button>

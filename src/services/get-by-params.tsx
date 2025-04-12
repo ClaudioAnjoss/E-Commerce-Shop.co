@@ -1,26 +1,18 @@
-import { iCategory } from '@/interfaces/iCategory'
 import { iProduct } from '@/interfaces/iProduct'
+import { IResponse } from '@/interfaces/IResponse'
 
+const URL = 'https://dummyjson.com/'
 export async function getByParams(
   params: string,
-): Promise<iProduct | iProduct[] | iCategory> {
+): Promise<iProduct | iProduct[] | IResponse> {
   try {
+    console.log(`${URL}${params}`)
     if (params) {
-      const url = `https://dummyjson.com/products/${params === 'allProducts' ? '' : params}`
-
-      console.log(url)
-
-      const res = await fetch(url)
+      const res = await fetch(`${URL}${params}`)
 
       const data = await res.json()
 
-      if (data.products) {
-        return data as iCategory
-      } else if (Array.isArray(data)) {
-        return data as iProduct[]
-      } else {
-        return data as iProduct
-      }
+      return data
     }
     console.warn('Parâmetro não fornecido para getByParams.')
     return []

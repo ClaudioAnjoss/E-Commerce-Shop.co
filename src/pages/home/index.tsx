@@ -3,7 +3,6 @@ import { MoveLeft, MoveRight } from 'lucide-react'
 import { Brands } from '@/components/brands'
 import Container from '@/components/container'
 import ClothingList from '@/components/clothing-list'
-import CardRating from '@/components/card-rating'
 import Title from '@/components/title'
 import BannerHome from './banner-home'
 import category1 from '@/assets/categorys/image-1.png'
@@ -11,6 +10,7 @@ import category2 from '@/assets/categorys/image-2.png'
 import category3 from '@/assets/categorys/image-3.png'
 import category4 from '@/assets/categorys/image-4.png'
 import CategoryCard from './category-card'
+import CardComent from '@/components/comments'
 
 export default function Home() {
   const randomCategory = [
@@ -66,29 +66,10 @@ export default function Home() {
           </span>
         </div>
       </Container>
-
       <div className="relative overflow-hidden my-10">
         <div className="hidden md:flex pointer-events-none absolute left-0 top-0 h-full w-20 z-10 bg-gradient-to-r from-white/80 to-transparent backdrop-blur-[2px]" />
         <div className="hidden md:flex pointer-events-none absolute right-0 top-0 h-full w-42 z-10 bg-gradient-to-l from-white/80 to-transparent backdrop-blur-[2px]" />
-
-        <div
-          className="flex gap-4 overflow-x-auto scroll-smooth sm:pl-20 "
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {Array.from({ length: 10 }).map((_, index) => (
-            <CardRating
-              key={index}
-              comment="Irei melhorar esse card"
-              date="hoje memso"
-              reviewerEmail="sei la"
-              reviewerName="Abotito"
-              rating={4.2}
-            />
-          ))}
-        </div>
+        <CardComent />
       </div>
     </section>
   )
