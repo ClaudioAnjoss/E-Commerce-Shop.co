@@ -1,7 +1,6 @@
 import { Separator } from '@/components/ui/shadcn/separator'
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { Brands } from '@/components/brands'
-import Container from '@/components/container'
 import ClothingList from '@/components/clothing-list'
 import Title from '@/components/title'
 import BannerHome from './banner-home'
@@ -11,6 +10,7 @@ import category3 from '@/assets/categorys/image-3.png'
 import category4 from '@/assets/categorys/image-4.png'
 import CategoryCard from './category-card'
 import CardComent from '@/components/comments'
+import Container from '@/components/container'
 
 export default function Home() {
   const randomCategory = [
@@ -27,7 +27,7 @@ export default function Home() {
   ].sort(() => 0.5 - Math.random())[0]
 
   return (
-    <section className="grid">
+    <section>
       <BannerHome />
 
       <Brands />

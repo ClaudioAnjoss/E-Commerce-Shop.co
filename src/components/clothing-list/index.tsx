@@ -25,7 +25,7 @@ export default function ClothingList({
   })
 
   return (
-    <Container classname="flex flex-col max-w-screen gap-4 pb-4">
+    <div className="flex flex-col max-w-screen gap-4 pb-4">
       {title && <Title className="mx-auto">{title.replace('-', ' ')}</Title>}
 
       <div className="flex gap-4 overflow-x-auto ">
@@ -64,6 +64,6 @@ export default function ClothingList({
           {button}
         </Button>
       )}
-    </Container>
+    </div>
   )
 }

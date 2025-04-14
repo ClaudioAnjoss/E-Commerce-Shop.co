@@ -6,7 +6,6 @@ import Rating from '../rating'
 import { Lens } from '../ui/magic-ui/lens'
 
 export default function ProductDetails({
-  id,
   title,
   rating,
   price,
@@ -15,8 +14,6 @@ export default function ProductDetails({
   images,
 }: iProduct) {
   const [selectedImage, setSelectedImage] = useState('')
-
-  console.log(id)
 
   useEffect(() => {
     setSelectedImage(images[0])
