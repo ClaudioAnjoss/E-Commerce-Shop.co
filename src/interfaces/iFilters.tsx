@@ -3,7 +3,6 @@ export interface iFilters {
   price: number[]
   discount: number
   rating: number
-  stock: number
   tag: string
   brand: string
 }

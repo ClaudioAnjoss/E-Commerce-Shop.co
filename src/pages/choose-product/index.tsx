@@ -11,14 +11,15 @@ import FadeContent from '@/components/ui/react-bits/fade-content'
 import SplitText from '@/components/ui/react-bits/split-text'
 import { iProduct } from '@/interfaces/iProduct'
 import { iFilters } from '@/interfaces/iFilters'
+import { Button } from '@/components/ui/shadcn/button'
 
 export default function ChooseProduct() {
+  const [hasFilters, setHasFilters] = useState(false)
   const [filters, setFilters] = useState<iFilters>({
     category: '',
     price: [0, 500],
     discount: 0,
     rating: 0,
-    stock: 0,
     tag: '',
     brand: '',
   })
@@ -29,42 +30,41 @@ export default function ChooseProduct() {
     queryFn: getAllProducts,
   })
 
-  console.log('filtros aplicados:', filters)
-  console.log('lista filtrada:', filteredProducts)
-
   useEffect(() => {
     window.scrollTo({
       top: 120,
       behavior: 'smooth',
     })
 
-    const hasFilters =
+    const active =
       filters.category !== '' ||
       filters.price[0] !== 0 ||
       filters.price[1] !== 500 ||
       filters.discount !== 0 ||
       filters.rating !== 0 ||
-      filters.stock !== 0 ||
       filters.tag !== '' ||
       (Array.isArray(filters.brand)
         ? filters.brand.length > 0
         : filters.brand !== '')
 
+    setHasFilters(active)
+  }, [filters])
+
+  useEffect(() => {
     if (!hasFilters) {
       setFilteredProducts(allProducts?.products || [])
       return
     }
 
-    const filtered = allProducts?.products.filter((product) => {
-      const { category, price, discount, rating, stock, tag, brand } = filters
+    const filtered = allProducts?.products.filter((product: iProduct) => {
+      const { category, price, discount, rating, tag, brand } = filters
 
       return (
         (!category || product.category === category) &&
         product.price >= price[0] &&
         product.price <= price[1] &&
-        (!discount || product.discount >= discount) &&
+        (!discount || product.discountPercentage >= discount) &&
         (!rating || product.rating <= rating) &&
-        (!stock || product.stock >= stock) &&
         (!tag || product.tags?.includes(tag)) &&
         (!brand ||
           (Array.isArray(brand)
@@ -74,7 +74,7 @@ export default function ChooseProduct() {
     })
 
     setFilteredProducts(filtered || [])
-  }, [filters, allProducts])
+  }, [filters, allProducts, hasFilters])
 
   return (
     <section className="grid md:grid-cols-[200px_1fr] gap-4 ">
@@ -90,10 +90,12 @@ export default function ChooseProduct() {
         <div className="flex items-center h-fit justify-between ">
           <div className="flex items-end gap-2">
             <SplitText
-              text={filters.category
-                .replace(/womens|-|mens/g, '')
-                .replace('sportsaccessories', 'sports accessories')
-                .toUpperCase()}
+              text={
+                filters.category
+                  .replace(/womens|-|mens/g, '')
+                  .replace('sportsaccessories', 'sports accessories')
+                  .toUpperCase() || 'All'
+              }
               className="font-semibold text-2xl"
               delay={150}
               animationFrom={{
@@ -112,6 +114,22 @@ export default function ChooseProduct() {
             </span>
           </div>
           <MenuDrawer className="md:hidden" />
+          <Button
+            className={`${hasFilters ? 'block' : 'hidden'} cursor-pointer`}
+            variant={'outline'}
+            onClick={() =>
+              setFilters({
+                category: '',
+                price: [0, 500],
+                discount: 0,
+                rating: 0,
+                tag: '',
+                brand: '',
+              })
+            }
+          >
+            Limpar filtros
+          </Button>
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 p-4">

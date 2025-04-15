@@ -18,8 +18,6 @@ export async function getAllProducts() {
     }
   }
 
-  // console.log(allClothes)
-
   return {
     products: allClothes,
     total: totalProducts,

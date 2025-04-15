@@ -1,22 +1,16 @@
-import { X } from 'lucide-react'
+import { SlidersVertical, X } from 'lucide-react'
 import { DrawerClose } from '@/components/ui/shadcn/drawer'
 import { Separator } from '@/components/ui/shadcn/separator'
 import { Slider } from '@/components/ui/shadcn/slider'
 import TitleDrawer from './title-drawer'
 import AccordionDrawer from './accordion-drawer'
 import { categories } from '@/database/categories'
-import { Button } from '@/components/ui/shadcn/button'
 import { iFilters } from '@/interfaces/iFilters'
+import { useQuery } from '@tanstack/react-query'
+import getAllTags from '@/services/get-all-tags'
+import getAllBrands from '@/services/get-all-brands'
 
-const discountOptions = [0, 10, 20, 30, 50]
-const tagOptions = [
-  'Novidade',
-  'Promoção',
-  'Mais vendidos',
-  'Limitado',
-  'Exclusivo',
-]
-const brandOptions = ['Apple', 'Samsung', 'Xiaomi', 'LG', 'Sony']
+const discountOptions = [0, 3, 5, 10, 15]
 
 interface iFilteredProducts {
   accordionOpen?: boolean
@@ -31,29 +25,21 @@ export function FilteredProducts({
   filters,
   onFilters,
 }: iFilteredProducts) {
+  const { data: tags } = useQuery({
+    queryKey: ['tags'],
+    queryFn: getAllTags,
+  })
+
+  const { data: brands } = useQuery({
+    queryKey: ['brands'],
+    queryFn: getAllBrands,
+  })
+
   return (
-    <div className="p-4 flex flex-col gap-4 border rounded-2xl">
+    <div className="p-4 flex flex-col gap-2 border rounded-2xl">
       <div className="flex items-center justify-between">
         <TitleDrawer>Filters</TitleDrawer>
-
-        {/* Clear */}
-        <Button
-          variant={'link'}
-          className="p-0 cursor-pointer"
-          onClick={() =>
-            onFilters?.({
-              category: '',
-              price: [0, 500],
-              discount: 0,
-              rating: 0,
-              stock: 0,
-              tag: '',
-              brand: '',
-            })
-          }
-        >
-          Limpar
-        </Button>
+        <SlidersVertical />
 
         {isDrawer && (
           <DrawerClose>
@@ -66,23 +52,40 @@ export function FilteredProducts({
 
       {/* Categories */}
       <AccordionDrawer title="Categories" accordionOpen={accordionOpen}>
-        {categories.map((data) => (
-          <button
-            key={data}
-            onClick={() =>
-              onFilters?.((prev) => ({
-                ...prev,
-                category: data,
-              }))
-            }
-            className="p-1 flex items-center justify-between text-sm cursor-pointer hover:bg-gray-100 hover:scale-105 transition-transform"
-          >
-            {data
-              .replace(/womens|-|mens/g, '')
-              .replace('sportsaccessories', 'sports accessories')
-              .toUpperCase()}
-          </button>
-        ))}
+        <button
+          onClick={() =>
+            onFilters?.((prev) => ({
+              ...prev,
+              category: '',
+            }))
+          }
+          className="p-1 flex items-center justify-between text-sm cursor-pointer hover:bg-gray-100 hover:scale-105 transition-transform"
+        >
+          All
+        </button>
+        {categories.map((data) => {
+          const isSelected = data === filters?.category
+
+          return (
+            <button
+              key={data}
+              onClick={() =>
+                onFilters?.((prev) => ({
+                  ...prev,
+                  category: data,
+                }))
+              }
+              className={`p-1 flex items-center justify-between text-sm cursor-pointer transition-transform 
+        hover:bg-gray-100 hover:scale-105 
+        ${isSelected ? 'bg-blue-600 text-white rounded' : ''}`}
+            >
+              {data
+                .replace(/womens|-|mens/g, '')
+                .replace('sportsaccessories', 'sports accessories')
+                .toUpperCase()}
+            </button>
+          )
+        })}
       </AccordionDrawer>
 
       {/* Price */}
@@ -106,7 +109,7 @@ export function FilteredProducts({
       <AccordionDrawer title="Discount" accordionOpen={accordionOpen}>
         <div className="flex gap-1 flex-wrap">
           {discountOptions.map((percent) => {
-            const isSelected = percent === 0
+            const isSelected = percent === filters?.discount
 
             return (
               <button
@@ -120,7 +123,7 @@ export function FilteredProducts({
                   }))
                 }
               >
-                {percent === 0 ? 'Sem desconto' : `${percent}%`}
+                {percent === 0 ? 'All' : `${percent}%`}
               </button>
             )
           })}
@@ -150,37 +153,10 @@ export function FilteredProducts({
         </div>
       </AccordionDrawer>
 
-      <AccordionDrawer title="Stock" accordionOpen={accordionOpen}>
+      {/* Tags */}
+      <AccordionDrawer title="Tags">
         <div className="flex flex-wrap gap-2">
-          {[
-            { label: 'Todos', value: 0 },
-            { label: 'Em estoque', value: 1 },
-            { label: 'Pouco estoque', value: 10 },
-            { label: 'Muito estoque', value: 50 },
-          ].map(({ label, value }) => {
-            const isSelected = filters?.stock === value
-
-            return (
-              <button
-                key={value}
-                className={`px-3 py-1 rounded-full border text-sm transition
-            ${isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'}`}
-                onClick={() =>
-                  onFilters?.((prev) => ({
-                    ...prev,
-                    stock: value,
-                  }))
-                }
-              >
-                {label}
-              </button>
-            )
-          })}
-        </div>
-      </AccordionDrawer>
-      <AccordionDrawer title="Tags" accordionOpen={accordionOpen}>
-        <div className="flex flex-wrap gap-2">
-          {tagOptions.map((tag) => {
+          {tags?.map((tag) => {
             const isSelected = filters?.tag === tag
 
             return (
@@ -202,39 +178,29 @@ export function FilteredProducts({
         </div>
       </AccordionDrawer>
 
-      <AccordionDrawer title="Brands" accordionOpen={accordionOpen}>
-        <AccordionDrawer title="Brands" accordionOpen={accordionOpen}>
-          <div className="flex flex-col gap-2">
-            {brandOptions.map((brand) => {
-              const isChecked = filters?.brand.includes(brand)
+      {/* Brands */}
+      <AccordionDrawer title="Brands">
+        <div className="flex flex-wrap gap-2">
+          {brands?.map((brand) => {
+            const isSelected = filters?.brand === brand
 
-              return (
-                <label
-                  key={brand}
-                  className="flex items-center gap-2 text-sm cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() =>
-                      onFilters?.((prev) => {
-                        const newBrands = isChecked
-                          ? prev.brand.filter((b) => b !== brand)
-                          : [...prev.brand, brand]
-
-                        return {
-                          ...prev,
-                          brand: newBrands,
-                        }
-                      })
-                    }
-                  />
-                  {brand}
-                </label>
-              )
-            })}
-          </div>
-        </AccordionDrawer>
+            return (
+              <button
+                key={brand}
+                className={`px-4 py-1 rounded-full border text-sm transition
+            ${isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'}`}
+                onClick={() =>
+                  onFilters?.((prev) => ({
+                    ...prev,
+                    brand: isSelected ? '' : brand, // desseleciona se clicar de novo
+                  }))
+                }
+              >
+                {brand}
+              </button>
+            )
+          })}
+        </div>
       </AccordionDrawer>
     </div>
   )
