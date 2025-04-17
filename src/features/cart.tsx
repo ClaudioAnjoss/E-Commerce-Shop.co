@@ -14,23 +14,21 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<iCartItem>) {
       const newItem = action.payload
-
       const existingItem = state.items.find((Item) => Item.id === newItem.id)
+      const addedAmount = newItem.price * newItem.quantity
 
       if (existingItem) {
         existingItem.quantity += newItem.quantity
-        state.totalDiscount += newItem.discountPercentage
-          ? ((newItem.price * newItem.discountPercentage) / 100) *
-            newItem.quantity
-          : 0
-
-        state.totalAmount += existingItem.subtotal ?? 0
         existingItem.subtotal = existingItem.price * existingItem.quantity
+        state.totalAmount += addedAmount
       } else {
         state.items.push({
           ...newItem,
-          subtotal: newItem.price * newItem.quantity,
+          subtotal: addedAmount,
         })
+
+        state.totalQuantity += newItem.quantity
+        state.totalAmount += addedAmount
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
@@ -54,6 +52,7 @@ const cartSlice = createSlice({
 
       if (!itemToChange) return
 
+      itemToChange.subtotal = action.payload.quantity * itemToChange.price
       state.totalQuantity -= itemToChange.quantity
       state.totalAmount -= itemToChange.price * itemToChange.quantity
 
@@ -62,8 +61,12 @@ const cartSlice = createSlice({
       state.totalQuantity += itemToChange.quantity
       state.totalAmount += itemToChange.price * itemToChange.quantity
     },
+    setCartStorage(state, action: PayloadAction<iCartState>) {
+      return action.payload
+    },
   },
 })
 
-export const { addToCart, removeFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, updateQuantity, setCartStorage } =
+  cartSlice.actions
 export default cartSlice.reducer

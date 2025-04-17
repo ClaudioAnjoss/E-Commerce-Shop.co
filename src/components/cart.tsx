@@ -18,53 +18,62 @@ export default function Cart() {
     <section className="grid gap-4 md:grid-cols-[2fr_1fr] justify-center">
       <div className="flex flex-col border rounded-4xl p-4 gap-4 ">
         {totalQuantity < 1 && <div>Carrinho vazio</div>}
-        {items.map((item) => (
-          <div key={item.id}>
-            <div className="flex items-center gap-2">
-              <div className="min-w-[100px] h-[100px] rounded-3xl overflow-hidden">
-                <img
-                  src={item.thumbnail}
-                  alt={item.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+        {items &&
+          items.map((item) => (
+            <div key={item.id}>
+              <div className="flex items-center gap-2">
+                <div className="min-w-[100px] h-[100px] rounded-3xl overflow-hidden">
+                  <img
+                    src={item.thumbnail}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-              <div className="flex flex-col gap-2 w-full items-start justify-between">
-                <div className="flex items-center justify-between w-full ">
-                  <h1 className="font-semibold line-clamp-1">{item.name}</h1>
-                  <Button
-                    variant={'outline'}
-                    size={'icon'}
-                    className="cursor-pointer border-none"
-                    onClick={() => dispatch(removeFromCart(item.id))}
-                  >
-                    <Trash color="red" />
-                  </Button>
-                </div>
-                <span className="text-sm font-light">Size: {item.weight}</span>
-                <span className="text-sm font-light">Color: White</span>
-                <div className="flex items-center justify-between w-full mt-auto">
-                  <span className="text-[20px] font-semibold">
-                    ${item.subtotal?.toFixed(2)}
+                <div className="flex flex-col gap-2 w-full items-start justify-between">
+                  <div className="flex items-center justify-between w-full ">
+                    <h1 className="font-semibold line-clamp-1">{item.name}</h1>
+                    <Button
+                      variant={'outline'}
+                      size={'icon'}
+                      className="cursor-pointer border-none"
+                      onClick={() => dispatch(removeFromCart(item.id))}
+                    >
+                      <Trash color="red" />
+                    </Button>
+                  </div>
+                  <span className="text-sm font-light">
+                    Size: {item.weight}
                   </span>
-                  <Count quantity={item.quantity} />
+                  <span className="text-sm font-light">Color: White</span>
+                  <div className="flex items-center justify-between w-full mt-auto">
+                    <span className="text-[20px] font-semibold">
+                      ${item.subtotal?.toFixed(2)}
+                    </span>
+                    <Count
+                      id={item.id}
+                      quantity={item.quantity}
+                      stock={item.stock}
+                    />
+                  </div>
                 </div>
               </div>
+              <Separator className="mt-4" />
             </div>
-            <Separator />
-          </div>
-        ))}
+          ))}
       </div>
 
       <div className="flex flex-col border rounded-4xl p-4 gap-4 h-fit md:w-[500px]">
         <h1 className="font-semibold text-[20px]">Order Summary</h1>
         <div className="flex items-center justify-between">
           <span className="font-light">Subtotal</span>
-          <span className="font-semibold">${totalAmount.toFixed(2)}</span>
+          <span className="font-semibold">
+            ${totalAmount && totalAmount.toFixed(2)}
+          </span>
         </div>
         <div className="flex items-center justify-between">
           <span className="font-light">
-            Discount (-{totalDiscount.toFixed(2)}%)
+            Discount (-{totalDiscount && totalDiscount.toFixed(2)}%)
           </span>
           <span className="font-semibold text-red-700">
             -${((totalDiscount * totalAmount) / 100).toFixed(2)}
@@ -80,7 +89,7 @@ export default function Cart() {
         <div className="flex items-center justify-between">
           <span className="font-light">Total</span>
           <span className="font-semibold">
-            ${(totalAmount - Number(totalDiscount.toFixed(2))).toFixed(2)}
+            ${(totalAmount - totalDiscount).toFixed(2)}
           </span>
         </div>
 
