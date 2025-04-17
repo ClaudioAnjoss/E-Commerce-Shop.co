@@ -5,13 +5,14 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/components/ui/shadcn/drawer'
-import { FilteredProducts } from './filtered-product'
+import { ReactNode } from 'react'
 
 interface iMenuDrawer {
   className?: string
+  children: ReactNode
 }
 
-export function MenuDrawer({ className }: iMenuDrawer) {
+export function MenuDrawer({ className, children }: iMenuDrawer) {
   return (
     <Drawer>
       <DrawerTrigger asChild className={`${className}`}>
@@ -22,9 +23,7 @@ export function MenuDrawer({ className }: iMenuDrawer) {
           <SlidersVertical />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <FilteredProducts isDrawer />
-      </DrawerContent>
+      <DrawerContent>{children}</DrawerContent>
     </Drawer>
   )
 }

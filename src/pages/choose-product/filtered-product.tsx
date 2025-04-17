@@ -36,10 +36,12 @@ export function FilteredProducts({
   })
 
   return (
-    <div className="p-4 flex flex-col gap-2 border rounded-2xl">
+    <div
+      className={`p-4 flex flex-col gap-2 border rounded-2xl ${isDrawer && 'max-h-[70dvh] overflow-auto'}`}
+    >
       <div className="flex items-center justify-between">
         <TitleDrawer>Filters</TitleDrawer>
-        <SlidersVertical />
+        {!isDrawer && <SlidersVertical />}
 
         {isDrawer && (
           <DrawerClose>

@@ -28,7 +28,6 @@ export default function CartPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
       <Title>Your cart</Title>
 
       <Cart />

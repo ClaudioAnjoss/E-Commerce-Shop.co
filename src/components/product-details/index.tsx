@@ -4,20 +4,16 @@ import { Separator } from '../ui/shadcn/separator'
 import { iProduct } from '@/interfaces/iProduct'
 import Rating from '../rating'
 import { Lens } from '../ui/magic-ui/lens'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '@/features/cart'
 
-export default function ProductDetails({
-  title,
-  rating,
-  price,
-  discountPercentage,
-  description,
-  images,
-}: iProduct) {
+export default function ProductDetails(item: iProduct) {
   const [selectedImage, setSelectedImage] = useState('')
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setSelectedImage(images[0])
-  }, [images])
+    setSelectedImage(item.images[0])
+  }, [item.images])
 
   return (
     <section className="grid md:grid-cols-2 gap-4">
@@ -27,19 +23,19 @@ export default function ProductDetails({
             <div className="bg-[#F0EEED] rounded-4xl w-full h-[290px] md:h-[370px] ">
               <img
                 src={selectedImage}
-                alt={title}
+                alt={item.title}
                 className="w-full h-full object-contain "
               />
             </div>
           </Lens>
         </div>
 
-        {images.length > 1 && (
+        {item.images.length > 1 && (
           <div
             className="md:py-2 md:col-end-1 md:order-1 flex md:flex-col md:max-h-[370px] items-center gap-4 overflow-auto"
             style={{ scrollbarWidth: 'none' }}
           >
-            {images.map((data, index) => (
+            {item.images.map((data, index) => (
               <span
                 className={`flex-1 min-w-[110px] sm:max-w-[110px] h-[106px] md:min-h-[106px]
                  bg-[#F0EEED] rounded-4xl cursor-pointer
@@ -60,21 +56,21 @@ export default function ProductDetails({
       </div>
 
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-integral-bold">{title}</h1>
+        <h1 className="text-2xl font-integral-bold">{item.title}</h1>
 
-        <Rating ratingValue={rating} />
+        <Rating ratingValue={item.rating} />
 
         <div className="text-2xl flex items-center gap-2">
-          <span className="font-semibold">${price} </span>
+          <span className="font-semibold">${item.price} </span>
           <span className="font-semibold text-gray-400 line-through">
-            {((price * discountPercentage) / 100).toFixed(2)}
+            {((item.price * item.discountPercentage) / 100).toFixed(2)}
           </span>
           <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2">
-            -{discountPercentage}%
+            -{item.discountPercentage}%
           </span>
         </div>
 
-        <p className="text-sm">{description}</p>
+        <p className="text-sm">{item.description}</p>
 
         <Separator />
 
@@ -99,7 +95,22 @@ export default function ProductDetails({
               +
             </button>
           </div>
-          <Button className="ml-4 rounded-4xl w-full max-w-[230px] py-6">
+          <Button
+            className="ml-4 rounded-4xl w-full max-w-[230px] py-6"
+            onClick={() =>
+              dispatch(
+                addToCart({
+                  id: item.id,
+                  name: item.title,
+                  price: item.price,
+                  quantity: 1,
+                  stock: item.stock,
+                  thumbnail: item.thumbnail,
+                  discountPercentage: item.discountPercentage,
+                }),
+              )
+            }
+          >
             Add to Cart
           </Button>
         </div>

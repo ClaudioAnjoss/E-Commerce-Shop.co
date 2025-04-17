@@ -36,7 +36,9 @@ export default function Header() {
         />
 
         <button className="transition-all duration-300 p-2 rounded-full hover:bg-secondary cursor-pointer">
-          <ShoppingCart />
+          <Link to={'/cart'}>
+            <ShoppingCart />
+          </Link>
         </button>
       </Container>
     </section>

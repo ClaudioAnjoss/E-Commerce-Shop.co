@@ -85,7 +85,6 @@ export default function ChooseProduct() {
           onFilters={setFilters}
         />
       </div>
-
       <section>
         <div className="flex items-center h-fit justify-between ">
           <div className="flex items-end gap-2">
@@ -113,7 +112,14 @@ export default function ChooseProduct() {
               Products
             </span>
           </div>
-          <MenuDrawer className="md:hidden" />
+          <MenuDrawer className="md:hidden max-h-[80px] overflow-auto">
+            <FilteredProducts
+              isDrawer
+              accordionOpen={false}
+              filters={filters}
+              onFilters={setFilters}
+            />
+          </MenuDrawer>
           <Button
             className={`${hasFilters ? 'block' : 'hidden'} cursor-pointer`}
             variant={'outline'}
@@ -142,62 +148,29 @@ export default function ChooseProduct() {
                 easing="ease-out"
                 initialOpacity={0}
               >
-                <Link to={String(id)} className="max-w-[300px]">
-                  <div className="w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
-                    <img src={thumbnail} alt={title} />
-                  </div>
-
-                  <h1>{title}</h1>
-
-                  <Rating ratingValue={rating} />
-
-                  <div className="text-[20px] flex items-center gap-2 max-w-[250px]  line-clamp-1">
-                    <span className="font-semibold">${price.toFixed(2)} </span>
-                    <span className="font-semibold text-gray-400 line-through">
-                      ${((price * discountPercentage) / 100).toFixed(2)}
-                    </span>
-                    <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2 line-clamp-1">
-                      -{discountPercentage}%
-                    </span>
-                  </div>
-                </Link>
-              </FadeContent>
-            ),
-          )}
-          {!filteredProducts &&
-            allProducts?.products.map(
-              ({ id, title, rating, price, discountPercentage, thumbnail }) => (
-                <FadeContent
-                  key={id}
-                  blur={true}
-                  duration={500}
-                  easing="ease-out"
-                  initialOpacity={0}
-                >
-                  <Link to={String(id)} className="max-w-[300px]">
-                    <div className="w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
+                <Link to={String(id)}>
+                  <div className="max-w-[150px] md:max-w-[300px] flex flex-col justify-between  h-full">
+                    <div className=" w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
                       <img src={thumbnail} alt={title} />
                     </div>
-
                     <h1>{title}</h1>
-
                     <Rating ratingValue={rating} />
-
-                    <div className="text-[20px] flex items-center gap-2 max-w-[250px]  line-clamp-1">
+                    <div className="md:text-[20px] flex items-center gap-2 max-w-[250px]  line-clamp-1">
                       <span className="font-semibold">
                         ${price.toFixed(2)}{' '}
                       </span>
-                      <span className="font-semibold text-gray-400 line-through">
+                      <span className="hidden md:block text-xs md:text-[20px] font-semibold text-gray-400 line-through">
                         ${((price * discountPercentage) / 100).toFixed(2)}
                       </span>
                       <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2 line-clamp-1">
                         -{discountPercentage}%
                       </span>
                     </div>
-                  </Link>
-                </FadeContent>
-              ),
-            )}
+                  </div>
+                </Link>
+              </FadeContent>
+            ),
+          )}
 
           {isLoading &&
             Array.from({ length: 12 }).map((_, index) => (
