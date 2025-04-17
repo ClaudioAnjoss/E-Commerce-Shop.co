@@ -12,7 +12,7 @@ export default function Count({ quantity }: iCount) {
     <div className="bg-[#F0EEED] flex items-center border rounded-3xl overflow-hidden">
       <button
         className="px-5 cursor-pointer transition-all duration-500 hover:bg-red-500 hover:text-white text-lg font-bold"
-        onClick={() => setQuantityInput((prev) => Math.max(1, prev - 1))}
+        onClick={() => setQuantityInput((prev = 1) => Math.max(1, prev - 1))}
       >
         -
       </button>
@@ -25,7 +25,7 @@ export default function Count({ quantity }: iCount) {
       />
       <button
         className="px-5 cursor-pointer transition-all duration-500 hover:bg-green-500 hover:text-white text-lg font-bold"
-        onClick={() => setQuantityInput((prev) => prev + 1)}
+        onClick={() => setQuantityInput((prev = 1) => prev + 1)}
       >
         +
       </button>
