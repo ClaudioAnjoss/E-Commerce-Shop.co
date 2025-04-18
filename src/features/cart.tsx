@@ -21,6 +21,7 @@ const cartSlice = createSlice({
         existingItem.quantity += newItem.quantity
         existingItem.subtotal = existingItem.price * existingItem.quantity
         state.totalAmount += addedAmount
+        state.totalDiscount += existingItem.discountSubtotal
       } else {
         state.items.push({
           ...newItem,
@@ -29,6 +30,7 @@ const cartSlice = createSlice({
 
         state.totalQuantity += newItem.quantity
         state.totalAmount += addedAmount
+        state.totalDiscount += newItem.discountSubtotal
       }
     },
     removeFromCart(state, action: PayloadAction<number>) {
@@ -41,6 +43,8 @@ const cartSlice = createSlice({
       state.totalAmount -= itemToRemove.price * itemToRemove.quantity
 
       state.items = state.items.filter((item) => item.id !== action.payload)
+      state.totalDiscount -=
+        itemToRemove.quantity * itemToRemove.discountSubtotal
     },
     updateQuantity(
       state,
@@ -60,6 +64,8 @@ const cartSlice = createSlice({
 
       state.totalQuantity += itemToChange.quantity
       state.totalAmount += itemToChange.price * itemToChange.quantity
+      // state.totalDiscount +=
+      //   itemToChange.discountSubtotal * itemToChange.quantity
     },
     setCartStorage(state, action: PayloadAction<iCartState>) {
       return action.payload

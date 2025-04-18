@@ -14,7 +14,8 @@ export interface iCartItem {
   shippingInformation?: string
   barcode?: string
   qrCode?: string
-  subtotal?: number
+  subtotal: number
+  discountSubtotal: number
 }
 
 export interface iCartState {

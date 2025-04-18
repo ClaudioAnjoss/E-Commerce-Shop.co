@@ -9,6 +9,7 @@ import { addToCart } from '@/features/cart'
 
 export default function ProductDetails(item: iProduct) {
   const [selectedImage, setSelectedImage] = useState('')
+  const [quantity] = useState(1)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -103,10 +104,13 @@ export default function ProductDetails(item: iProduct) {
                   id: item.id,
                   name: item.title,
                   price: item.price,
-                  quantity: 1,
+                  quantity,
                   stock: item.stock,
                   thumbnail: item.thumbnail,
                   discountPercentage: item.discountPercentage,
+                  discountSubtotal:
+                    (item.price * quantity * item.discountPercentage) / 100,
+                  subtotal: item.price * quantity,
                 }),
               )
             }

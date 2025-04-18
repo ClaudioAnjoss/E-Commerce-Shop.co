@@ -76,7 +76,7 @@ export default function Cart() {
             Discount (-{totalDiscount && totalDiscount.toFixed(2)}%)
           </span>
           <span className="font-semibold text-red-700">
-            -${((totalDiscount * totalAmount) / 100).toFixed(2)}
+            -${totalDiscount.toFixed(2)}
           </span>
         </div>
         <div className="flex items-center justify-between">
