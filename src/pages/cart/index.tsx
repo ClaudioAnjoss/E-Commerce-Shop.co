@@ -1,4 +1,4 @@
-import Cart from '@/components/cart'
+import CartItems from '@/components/card-itens/cart'
 import Container from '@/components/container'
 import Title from '@/components/title'
 import {
@@ -30,7 +30,7 @@ export default function CartPage() {
       </Breadcrumb>
       <Title>Your cart</Title>
 
-      <Cart />
+      <CartItems />
     </Container>
   )
 }

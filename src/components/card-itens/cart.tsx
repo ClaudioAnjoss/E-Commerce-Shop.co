@@ -1,13 +1,13 @@
-import Count from './count'
+import Count from '../count'
 import { BadgePercent, MoveRight, Trash } from 'lucide-react'
-import { Separator } from './ui/shadcn/separator'
-import { Input } from './ui/shadcn/input'
-import { Button } from './ui/shadcn/button'
+import { Separator } from '../ui/shadcn/separator'
+import { Input } from '../ui/shadcn/input'
+import { Button } from '../ui/shadcn/button'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store'
-import { removeFromCart } from '@/features/cart'
+import { removeFromCart } from '@/store/features/cart'
 
-export default function Cart() {
+export default function CartItems() {
   const { items, totalAmount, totalQuantity, totalDiscount } = useSelector(
     (state: RootState) => state.cart,
   )
@@ -30,31 +30,51 @@ export default function Cart() {
                   />
                 </div>
 
-                <div className="flex flex-col gap-2 w-full items-start justify-between">
-                  <div className="flex items-center justify-between w-full ">
-                    <h1 className="font-semibold line-clamp-1">{item.name}</h1>
-                    <Button
-                      variant={'outline'}
-                      size={'icon'}
-                      className="cursor-pointer border-none"
+                <div className="flex flex-col w-full gap-3 min-w-[250px]">
+                  <div className="flex items-center justify-between w-full">
+                    <h1 className="text-base font-semibold text-zinc-800 leading-tight line-clamp-1">
+                      {item.name}
+                    </h1>
+                    <button
+                      className="border-none hover:bg-red-50 p-1 rounded-full cursor-pointer"
                       onClick={() => dispatch(removeFromCart(item.id))}
                     >
-                      <Trash color="red" />
-                    </Button>
+                      <Trash className="text-red-500" size={16} />
+                    </button>
                   </div>
-                  <span className="text-sm font-light">
-                    Size: {item.weight}
-                  </span>
-                  <span className="text-sm font-light">Color: White</span>
-                  <div className="flex items-center justify-between w-full mt-auto">
-                    <span className="text-[20px] font-semibold">
-                      ${item.subtotal?.toFixed(2)}
-                    </span>
-                    <Count
-                      id={item.id}
-                      quantity={item.quantity}
-                      stock={item.stock}
-                    />
+
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-zinc-600 grid gap-1">
+                      <span>In stock: {item.stock}</span>
+                      <span className="flex flex-nowrap whitespace-nowrap text-sm text-zinc-600">
+                        Discount applied:&nbsp;
+                        <strong className="text-red-500 font-semibold whitespace-nowrap">
+                          -{item.discountPercentage}%
+                        </strong>
+                      </span>
+
+                      <Count
+                        id={item.id}
+                        quantity={item.quantity}
+                        stock={item.stock}
+                      />
+                    </div>
+                    <div className="flex flex-col items-end w-full mt-auto">
+                      {item.discountPercentage && (
+                        <span className="text-sm text-zinc-400 ">
+                          -$
+                          {(
+                            (item.price *
+                              item.quantity *
+                              item.discountPercentage) /
+                            100
+                          ).toFixed(2)}
+                        </span>
+                      )}
+                      <span className="text-xl font-bold text-zinc-800">
+                        ${(item.subtotal - item.discountSubtotal).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -88,9 +108,7 @@ export default function Cart() {
 
         <div className="flex items-center justify-between">
           <span className="font-light">Total</span>
-          <span className="font-semibold">
-            ${(totalAmount - totalDiscount).toFixed(2)}
-          </span>
+          <span className="font-semibold">${totalAmount.toFixed(2)}</span>
         </div>
 
         <form action="" className="flex gap-4">
