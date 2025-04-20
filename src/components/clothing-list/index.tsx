@@ -1,4 +1,3 @@
-import Container from '../container'
 import { Button } from '../ui/shadcn/button'
 import Title from '../title'
 import { Link } from 'react-router'
@@ -35,7 +34,7 @@ export default function ClothingList({
               key={id}
               className="cursor-pointer flex flex-col p-2 max-w-[300px]"
             >
-              <Link to={`/shop/${id}`}>
+              <Link to={`/shop/${id}/${title}`}>
                 <div className="bg-[#F0EEED] rounded-3xl min-w-[300px] overflow-hidden">
                   <img
                     src={thumbnail}
@@ -57,12 +56,14 @@ export default function ClothingList({
           ))}
       </div>
       {button && (
-        <Button
-          className="rounded-3xl text-lg px-20 py-6 mx-auto border"
-          variant={'ghost'}
-        >
-          {button}
-        </Button>
+        <Link className="mx-auto" to={'/shop'}>
+          <Button
+            className="rounded-3xl text-lg px-20 py-6  border"
+            variant={'ghost'}
+          >
+            {button}
+          </Button>
+        </Link>
       )}
     </div>
   )

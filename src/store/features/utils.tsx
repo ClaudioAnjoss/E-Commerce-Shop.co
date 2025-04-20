@@ -1,7 +1,7 @@
 import { iCartItem, iCartState } from '@/interfaces/iCartState'
 import { toast } from 'sonner'
 
-interface iFeedbackSuccess {
+interface iFeedbackToUser {
   method: string
   item?: iCartItem
 }
@@ -18,7 +18,7 @@ export function recalculateCartTotals(state: iCartState) {
   )
 }
 
-export function feedbackSuccess({ method, item }: iFeedbackSuccess) {
+export function feedbackToUser({ method, item }: iFeedbackToUser) {
   if (method === 'add' && item)
     toast(
       <div className="flex items-center p-4    max-w-sm w-full ">
@@ -48,6 +48,24 @@ export function feedbackSuccess({ method, item }: iFeedbackSuccess) {
               Este item está fora de estoque.
             </p>
           )}
+        </div>
+      </div>,
+    )
+
+  if (method === 'remove' && item)
+    toast(
+      <div className="flex items-center p-4 max-w-sm w-full  ">
+        <img
+          src={item.thumbnail}
+          alt={item.name}
+          className="w-16 h-16 object-cover rounded-lg mr-4"
+        />
+
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold text-red-800">Item Removed</h3>
+          <p className="text-sm text-gray-600">
+            You have removed {item.name} from your cart.
+          </p>
         </div>
       </div>,
     )

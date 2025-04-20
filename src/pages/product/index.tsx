@@ -18,7 +18,6 @@ import { useParams } from 'react-router'
 export default function Product() {
   const { id } = useParams()
   const queryClient = useQueryClient()
-
   const { data: product, isFetching } = useQuery<iProduct>({
     queryKey: ['product'],
     queryFn: () => getByParams(`product/${id}`) as Promise<iProduct>,

@@ -18,13 +18,13 @@ export default function MainRoutes() {
           <Route index element={<Home />} />
           <Route path="/shop" element={<Shop />}>
             <Route index element={<ChooseProduct />} />
-            <Route path=":id" element={<Product />} />
+            <Route path=":id/:name" element={<Product />} />
+            <Route path="cart" element={<CartPage />} />
           </Route>
           <Route path="/on-sale" element={<OnSale />} />
           <Route path="/services" element={<ServicePage />} />
           <Route path="/arrivals" element={<Arrivals />} />
           <Route path="/brands" element={<Brands />} />
-          <Route path="/cart" element={<CartPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

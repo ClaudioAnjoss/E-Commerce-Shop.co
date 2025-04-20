@@ -1,22 +1,14 @@
 [
     {
+        "name": "Home",
+        "href": "/"
+    },
+    {
         "name": "Shop",
         "href": "/shop"
     },
     {
-        "name": "On Sale",
-        "href": "/on-sale"
-    },
-    {
-        "name": "Serviços",
+        "name": "About",
         "href": "/services"
-    },
-    {
-        "name": "New Arrivals",
-        "href": "/arrivals"
-    },
-    {
-        "name": "Brands",
-        "href": "/brands"
     }
 ]

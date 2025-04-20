@@ -148,7 +148,7 @@ export default function ChooseProduct() {
                 easing="ease-out"
                 initialOpacity={0}
               >
-                <Link to={String(id)}>
+                <Link to={`${id}/${title}`}>
                   <div className="max-w-[150px] md:max-w-[300px] flex flex-col justify-between  h-full">
                     <div className=" w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
                       <img src={thumbnail} alt={title} />

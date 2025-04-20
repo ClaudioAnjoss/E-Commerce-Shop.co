@@ -1,6 +1,6 @@
 import { iCartItem, iCartState } from '@/interfaces/iCartState'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { feedbackSuccess, recalculateCartTotals } from './utils'
+import { feedbackToUser, recalculateCartTotals } from './utils'
 
 const initialState: iCartState = {
   items: [],
@@ -40,7 +40,7 @@ const cartSlice = createSlice({
       }
 
       recalculateCartTotals(state)
-      feedbackSuccess({ method: 'add', item: newItem || existingItem })
+      feedbackToUser({ method: 'add', item: newItem || existingItem })
     },
     increment(state, action: PayloadAction<number>) {
       const item = state.items.find((i) => i.id === action.payload)
@@ -79,6 +79,7 @@ const cartSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== id)
 
       recalculateCartTotals(state)
+      feedbackToUser({ method: 'remove', item: itemToRemove })
     },
     setCartStorage(_, action: PayloadAction<iCartState>) {
       return action.payload

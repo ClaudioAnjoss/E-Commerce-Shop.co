@@ -1,12 +1,12 @@
-import { Button } from '../ui/shadcn/button'
 import { useEffect, useState } from 'react'
 import { Separator } from '../ui/shadcn/separator'
 import { iProduct } from '@/interfaces/iProduct'
 import Rating from '../rating'
 import { Lens } from '../ui/magic-ui/lens'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '@/store/features/cart'
+import { addToCart, removeFromCart } from '@/store/features/cart'
 import { RootState } from '@/store'
+import { AnimatedSubscribeButton } from '../ui/magic-ui/animated-button-interation'
 
 interface iHandleQuantity {
   max: number
@@ -16,19 +16,45 @@ interface iHandleQuantity {
 export default function ProductDetails(item: iProduct) {
   const [selectedImage, setSelectedImage] = useState('')
   const [quantityCount, setQuantityCount] = useState(1)
-
-  const itemCart = useSelector((state: RootState) =>
-    state.cart.items.find((itemInCart) => itemInCart.id === item.id),
-  )
   const dispatch = useDispatch()
-
-  console.log(itemCart)
+  const { quantity: cartQuantity = 0 } = useSelector(
+    (state: RootState) =>
+      state.cart.items.find((itemInCart) => itemInCart.id === item.id) || {
+        quantity: 0,
+      },
+  )
 
   function handleQuantity({ max, quantity }: iHandleQuantity) {
     if (quantity < 1) return setQuantityCount(1)
     if (quantity >= max) return setQuantityCount(max)
 
     setQuantityCount(quantity)
+  }
+
+  function handleSubmit() {
+    if (cartQuantity && cartQuantity + quantityCount - 1 >= item.stock)
+      return alert(
+        `Limite de estoque atingido. Diminua a quantidade para continuar. Estoque máximo: ${item.stock} unidades.`,
+      )
+
+    if (!cartQuantity) {
+      dispatch(
+        addToCart({
+          id: item.id,
+          name: item.title,
+          price: item.price,
+          quantity: quantityCount,
+          stock: item.stock,
+          thumbnail: item.thumbnail,
+          discountPercentage: item.discountPercentage,
+          discountSubtotal:
+            (item.price * quantityCount * item.discountPercentage) / 100,
+          subtotal: item.price * quantityCount,
+        }),
+      )
+    } else {
+      dispatch(removeFromCart(item.id))
+    }
   }
 
   useEffect(() => {
@@ -142,29 +168,14 @@ export default function ProductDetails(item: iProduct) {
               +
             </button>
           </div>
-          <Button
-            className="ml-4 rounded-4xl w-full max-w-[230px] py-6"
-            onClick={() =>
-              dispatch(
-                addToCart({
-                  id: item.id,
-                  name: item.title,
-                  price: item.price,
-                  quantity: quantityCount,
-                  stock: item.stock,
-                  thumbnail: item.thumbnail,
-                  discountPercentage: item.discountPercentage,
-                  discountSubtotal:
-                    (item.price * quantityCount * item.discountPercentage) /
-                    100,
-                  subtotal: item.price * quantityCount,
-                }),
-              )
-            }
-            disabled={itemCart && itemCart?.quantity >= itemCart?.stock}
+
+          <AnimatedSubscribeButton
+            subscribeStatus={!!cartQuantity}
+            onClick={handleSubmit}
           >
-            Add to Cart
-          </Button>
+            <span>Add to Cart</span>
+            <span>Added</span>
+          </AnimatedSubscribeButton>
         </div>
       </div>
     </section>

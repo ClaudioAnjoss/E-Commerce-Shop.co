@@ -3,6 +3,7 @@ import AnimatedContent from '@/components/ui/react-bits/animated-content'
 import { Button } from '@/components/ui/shadcn/button'
 
 import bgMain from '@/assets/bg-home-main.png'
+import { Link } from 'react-router'
 
 export default function BannerHome() {
   return (
@@ -27,9 +28,11 @@ export default function BannerHome() {
               designed to bring out your individuality and cater to your sense
               of style.
             </h2>
-            <Button className="rounded-3xl w-full md:max-w-[210px] py-6">
-              Shop Now
-            </Button>
+            <Link to={'/shop'}>
+              <Button className="rounded-3xl w-full md:max-w-[210px] py-6">
+                Shop Now
+              </Button>
+            </Link>
 
             <ul className="grid grid-cols-2 md:grid-cols-3">
               <li className="flex flex-col items-center md:items-start">
