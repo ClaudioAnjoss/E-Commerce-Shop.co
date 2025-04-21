@@ -1,20 +1,20 @@
 import { MenuDrawer } from './menu-drawer'
 import { FilteredProducts } from './filtered-product'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import Rating from '@/components/rating'
-import { useEffect, useState } from 'react'
-
+import { useEffect, useMemo, useState } from 'react'
 import { getAllProducts } from '@/services/get-all-products'
 import { Skeleton } from '@/components/ui/shadcn/skeleton'
 import FadeContent from '@/components/ui/react-bits/fade-content'
 import SplitText from '@/components/ui/react-bits/split-text'
-import { iProduct } from '@/interfaces/iProduct'
 import { iFilters } from '@/interfaces/iFilters'
 import { Button } from '@/components/ui/shadcn/button'
+import { MdSearchOff } from 'react-icons/md' // Usando um ícone de pesquisa sem resultados
 
 export default function ChooseProduct() {
-  const [hasFilters, setHasFilters] = useState(false)
+  const [searchParams] = useSearchParams()
+  const search = searchParams.get('search')
   const [filters, setFilters] = useState<iFilters>({
     category: '',
     price: [0, 500],
@@ -23,43 +23,22 @@ export default function ChooseProduct() {
     tag: '',
     brand: '',
   })
-  const [filteredProducts, setFilteredProducts] = useState<iProduct[]>([])
-
   const { data: allProducts, isLoading } = useQuery({
     queryKey: ['all-products'],
     queryFn: getAllProducts,
   })
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 120,
-      behavior: 'smooth',
-    })
+  const filteredProducts = useMemo(() => {
+    if (!allProducts?.products) return []
 
-    const active =
-      filters.category !== '' ||
-      filters.price[0] !== 0 ||
-      filters.price[1] !== 500 ||
-      filters.discount !== 0 ||
-      filters.rating !== 0 ||
-      filters.tag !== '' ||
-      (Array.isArray(filters.brand)
-        ? filters.brand.length > 0
-        : filters.brand !== '')
+    return allProducts.products.filter((product) => {
+      const matchesSearch = search
+        ? product.title.toLowerCase().includes(search)
+        : true
 
-    setHasFilters(active)
-  }, [filters])
-
-  useEffect(() => {
-    if (!hasFilters) {
-      setFilteredProducts(allProducts?.products || [])
-      return
-    }
-
-    const filtered = allProducts?.products.filter((product: iProduct) => {
       const { category, price, discount, rating, tag, brand } = filters
 
-      return (
+      const matchesFilters =
         (!category || product.category === category) &&
         product.price >= price[0] &&
         product.price <= price[1] &&
@@ -70,11 +49,17 @@ export default function ChooseProduct() {
           (Array.isArray(brand)
             ? brand.includes(product.brand)
             : product.brand === brand))
-      )
-    })
 
-    setFilteredProducts(filtered || [])
-  }, [filters, allProducts, hasFilters])
+      return matchesSearch && matchesFilters
+    })
+  }, [allProducts, filters, search])
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 120,
+      behavior: 'smooth',
+    })
+  }, [filters])
 
   return (
     <section className="grid md:grid-cols-[200px_1fr] gap-4 ">
@@ -121,7 +106,7 @@ export default function ChooseProduct() {
             />
           </MenuDrawer>
           <Button
-            className={`${hasFilters ? 'block' : 'hidden'} cursor-pointer`}
+            className={`${filters ? 'block' : 'hidden'} cursor-pointer`}
             variant={'outline'}
             onClick={() =>
               setFilters({
@@ -139,6 +124,50 @@ export default function ChooseProduct() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 p-4">
+          {filteredProducts.length ? (
+            filteredProducts.map(
+              ({ id, title, rating, price, discountPercentage, thumbnail }) => (
+                <FadeContent
+                  key={id}
+                  blur={true}
+                  duration={500}
+                  easing="ease-out"
+                  initialOpacity={0}
+                >
+                  <Link to={`${id}/${title}`}>
+                    <div className="max-w-[150px] md:max-w-[300px] flex flex-col justify-between  h-full">
+                      <div className=" w-full bg-[#F0EEED] rounded-4xl overflow-hidden">
+                        <img src={thumbnail} alt={title} />
+                      </div>
+                      <h1>{title}</h1>
+                      <Rating ratingValue={rating} />
+                      <div className="md:text-[20px] flex items-center gap-2 max-w-[250px]  line-clamp-1">
+                        <span className="font-semibold">
+                          ${price.toFixed(2)}{' '}
+                        </span>
+                        <span className="hidden md:block text-xs md:text-[20px] font-semibold text-gray-400 line-through">
+                          ${((price * discountPercentage) / 100).toFixed(2)}
+                        </span>
+                        <span className="text-red-900 text-sm bg-red-200 rounded-4xl py-1 px-2 line-clamp-1">
+                          -{discountPercentage}%
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </FadeContent>
+              ),
+            )
+          ) : (
+            <div className="flex flex-col items-center justify-center p-8 space-y-4 text-center text-zinc-500">
+              <MdSearchOff className="w-16 h-16 text-zinc-400" />
+              <h3 className="text-lg font-medium">Nenhum produto encontrado</h3>
+              <p>
+                Desculpe, não encontramos nenhum produto que corresponda à sua
+                busca ou filtros.
+              </p>
+            </div>
+          )}
+
           {filteredProducts.map(
             ({ id, title, rating, price, discountPercentage, thumbnail }) => (
               <FadeContent
