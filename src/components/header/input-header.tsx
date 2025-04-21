@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '../ui/shadcn/form'
 import { useNavigate } from 'react-router'
+import { Button } from '../ui/shadcn/button'
 
 const formSchema = z.object({
   search: z
@@ -37,6 +38,7 @@ export default function InputHeader() {
       search: '',
     },
   })
+  const searchValue = form.watch('search')
 
   function onSubmit(data: FormData) {
     navigate(`/shop?search=${data.search}`)
@@ -45,7 +47,7 @@ export default function InputHeader() {
   return (
     <Form {...form}>
       <form
-        className="flex-grow max-w-sm hidden sm:flex"
+        className="flex-grow max-w-sm "
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -55,13 +57,22 @@ export default function InputHeader() {
             <FormItem className="w-full relative space-y-0">
               <FormControl>
                 <Input
-                  id="search"
                   placeholder="Buscar produtos..."
                   icon={Search}
                   {...field}
                   className="rounded-full bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-white placeholder:text-zinc-500"
                 />
               </FormControl>
+              {searchValue && (
+                <Button
+                  type="reset"
+                  variant={'link'}
+                  className="absolute top-0 right-0"
+                  onClick={() => form.setValue('search', '')}
+                >
+                  Clear
+                </Button>
+              )}
               <FormMessage className="absolute" />
             </FormItem>
           )}
