@@ -1,13 +1,29 @@
-# Shop.co
+# 🛍️ Shop.co
 
-Pra rodar, primeiro você precisa ter o Node.js instalado (de preferência a versão LTS). Você pode conferir se já tem ele rodando `node -v` e `npm -v` no terminal.
+Bem-vindo ao **Shop.co**, um projeto pessoal feito com muito carinho! Uma loja virtual de roupas criada do zero usando **React**, **Redux** e várias ferramentas modernas.
 
-Depois, é só clonar o repositório com `git https://github.com/ClaudioAnjoss/E-Commerce-Shop.co` e entrar na pasta com `cd /E-Commerce-Shop.co`.
+## ✨ Sobre o Projeto
 
-Instale as dependências com `npm install` e, em seguida, rode o projeto com `npm run dev`. O terminal vai te mostrar um link (geralmente `http://localhost:8080`) e você pode abrir no navegador pra ver o projeto funcionando.
+Desenvolvido como desafio pessoal, o foco aqui não foi só um layout bonito, mas sim criar uma aplicação funcional, escalável e com código limpo.
 
-Se quiser gerar uma build pra produção, use `npm run build`. Os arquivos finais vão ficar na pasta `dist`.
+- 🔧 **Stack**: React, Redux, Vite, localStorage  
+- 🧠 **Funcionalidades**: controle de estoque, carrinho inteligente, persistência de dados  
+- 🎨 **Design**: 100% responsivo e fiel ao Figma  
+- 📦 **Componentização**: componentes reutilizáveis e boas práticas de front-end  
+- 🔓 **Open Source**: código aberto e bem documentado  
 
-Pra visualizar a build como se fosse em produção, roda `npm run preview`.
+## 📸 Preview
 
-Qualquer coisa, só chamar.
+🔗 [Acesse o site na Vercel]([https://shop-co.vercel.app](https://e-commerce-shop-co-sigma.vercel.app/))  
+📁 [Veja o protótipo no Figma](https://www.figma.com/design/lykFKqqEinEBWi9UDtnKjL/E-commerce-Website-Template--Freebie---Community-?node-id=20-2&t=f8gi9rvdejRYLmhT-0)  
+💻 [Repositório no GitHub](https://github.com/ClaudioAnjoss/E-Commerce-Shop.co)
+
+---
+
+## 🚀 Como Rodar Localmente
+
+1. Certifique-se de ter o **Node.js LTS** instalado  
+   Verifique com:
+   ```bash
+   node -v
+   npm -v
