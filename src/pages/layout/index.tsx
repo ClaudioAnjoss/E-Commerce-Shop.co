@@ -13,10 +13,6 @@ export default function Layout() {
   const [loaded, setLoaded] = useState(false)
   const dispatch = useDispatch()
 
-  console.log(
-    'Olá recrutador! 👀 Que bom te ver por aqui no console haha 😄 Espero que goste do meu site. Qualquer feedback é super bem-vindo!',
-  )
-
   useEffect(() => {
     const storedCart = loadCart()
     dispatch(setCartStorage(storedCart))

@@ -9,6 +9,10 @@ import { store } from './store'
 
 const queryClient = new QueryClient()
 
+console.log(
+  'Olá recrutador! 👀 Que bom te ver por aqui no console haha 😄 Espero que goste do meu site. Qualquer feedback é super bem-vindo!',
+)
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
