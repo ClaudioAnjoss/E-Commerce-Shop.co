@@ -1,13 +1,55 @@
 # Shop.co
 
-Pra rodar, primeiro você precisa ter o Node.js instalado (de preferência a versão LTS). Você pode conferir se já tem ele rodando `node -v` e `npm -v` no terminal.
+Esse projeto surgiu como um desafio pessoal: construir uma loja virtual de roupas do zero, utilizando React e ferramentas modernas.
 
-Depois, é só clonar o repositório com `git https://github.com/ClaudioAnjoss/E-Commerce-Shop.co` e entrar na pasta com `cd /E-Commerce-Shop.co`.
+## Deploy
 
-Instale as dependências com `npm install` e, em seguida, rode o projeto com `npm run dev`. O terminal vai te mostrar um link (geralmente `http://localhost:8080`) e você pode abrir no navegador pra ver o projeto funcionando.
+<!-- Link direto para a aplicação publicada, facilitando testes e demonstrações -->
+A versão online do projeto está hospedada na Vercel:  
+[https://shop-co.vercel.app](https://e-commerce-shop-co-sigma.vercel.app/)
 
-Se quiser gerar uma build pra produção, use `npm run build`. Os arquivos finais vão ficar na pasta `dist`.
+## Tecnologias Utilizadas
 
-Pra visualizar a build como se fosse em produção, roda `npm run preview`.
+- **React** – Biblioteca principal para construção da interface  
+- **Redux** – Gerenciamento global de estado da aplicação  
+- **Vite** – Ferramenta moderna de build e desenvolvimento rápido  
+- **Tailwind CSS** – Framework de estilos utilitários para UI responsiva e consistente  
+- **localStorage** – Persistência dos dados localmente no navegador  
+- **Figma** – Ferramenta de design utilizada para o layout da interface
 
-Qualquer coisa, só chamar.
+## Funcionalidades
+
+- **Carrinho inteligente**: salva no localStorage, com validações e controle de estoque  
+- **Design fiel ao Figma**: responsivo, clean e com atenção aos detalhes visuais  
+- **Código limpo**: com organização de pastas, semântica HTML e componentização  
+- **Componentes reutilizáveis**: voltado para escalabilidade e manutenção fácil
+
+## Como Rodar Localmente
+
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/ClaudioAnjoss/E-Commerce-Shop.co
+   cd E-Commerce-Shop.co
+   ```
+
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Abra no navegador**:
+   ```
+   http://localhost:5173
+   ```
+
+> **Requisitos:** Certifique-se de ter o Node.js instalado na versão LTS.
+
+## Protótipo
+
+Veja o design original no Figma:  
+[Link para o Figma](https://www.figma.com/design/lykFKqqEinEBWi9UDtnKjL/E-commerce-Website-Template--Freebie---Community-?t=wDH5aLJPSVrrDYSK-0)
