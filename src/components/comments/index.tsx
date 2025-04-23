@@ -1,22 +1,41 @@
 import { IResponse } from '@/interfaces/IResponse'
 import { getByParams } from '@/services/get-by-params'
 import { useQuery } from '@tanstack/react-query'
-import { Heart } from 'lucide-react'
+import { Heart, MoveLeft, MoveRight } from 'lucide-react'
+import Title from '../title'
+import { useRef } from 'react'
 
 export default function Comments() {
+  const scrollRef = useRef(null)
   const { data: comments } = useQuery<IResponse>({
     queryKey: ['comments'],
     queryFn: () => getByParams('comments?limit=10') as Promise<IResponse>,
   })
 
   return (
-    <div className="relative w-full ">
-      <div className="pointer-events-none absolute left-0 top-0 h-full z-10 w-44 bg-gradient-to-r from-white via-white/75 to-transparent" />
+    <>
+      <div className="flex justify-between items-center px-4">
+        <h1 className=" whitespace-nowraptext-[20px] md:text-5xl font-integral-bold">
+          OUR HAPPY CUSTOMERS
+        </h1>
+        <span className="flex">
+          <button className="p-2 transition-all duration-500 cursor-pointer hover:bg-gray-200 rounded-full">
+            <MoveLeft className="hover:scale-110 transition-all" />
+          </button>
+          <button className="p-2 transition-all duration-500 cursor-pointer hover:bg-gray-200 rounded-full">
+            <MoveRight className="hover:scale-110 transition-all" />
+          </button>
+        </span>
+      </div>
 
-      <div className="pointer-events-none absolute right-0 top-0 h-full z-10 w-44 bg-gradient-to-l from-white via-white/75 to-transparent" />
+      <div className="relative w-full ">
+        <div className="pointer-events-none absolute left-0 top-0 h-full z-10 w-8 md:84 bg-gradient-to-r from-white via-white/75 to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full z-10 w-8 md:w-44 bg-gradient-to-l from-white via-white/75 to-transparent" />
 
-      <div className="overflow-x-auto w-full">
-        <div className="flex gap-4 px-4 py-6 min-w-max">
+        <div
+          className="flex gap-4 px-4 py-6 max-w-screen overflow-x-auto"
+          ref={scrollRef}
+        >
           {comments?.comments.map(({ id, user, likes, body }) => (
             <div
               key={id}
@@ -46,6 +65,6 @@ export default function Comments() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   )
 }

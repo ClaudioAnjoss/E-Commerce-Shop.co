@@ -53,24 +53,8 @@ export default function Home() {
             <CategoryCard title="Gym" image={category4} />
           </div>
         </section>
-
-        <div className="flex justify-between px-4">
-          <Title>OUR HAPPY CUSTOMERS</Title>
-          <span className="flex">
-            <button className="p-2 transition-all duration-500 cursor-pointer hover:bg-gray-200 rounded-full">
-              <MoveLeft className="hover:scale-110 transition-all" />
-            </button>
-            <button className="p-2 transition-all duration-500 cursor-pointer hover:bg-gray-200 rounded-full">
-              <MoveRight className="hover:scale-110 transition-all" />
-            </button>
-          </span>
-        </div>
       </Container>
-      <div className="relative overflow-hidden my-10">
-        <div className="hidden md:flex pointer-events-none absolute left-0 top-0 h-full w-20 z-10 bg-gradient-to-r from-white/80 to-transparent backdrop-blur-[2px]" />
-        <div className="hidden md:flex pointer-events-none absolute right-0 top-0 h-full w-42 z-10 bg-gradient-to-l from-white/80 to-transparent backdrop-blur-[2px]" />
-        <CardComent />
-      </div>
+      <CardComent />
     </section>
   )
 }

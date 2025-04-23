@@ -1,20 +1,15 @@
-import { motion } from 'framer-motion'
 import { FaReact, FaShoppingCart, FaCode, FaGithub } from 'react-icons/fa'
 import { MdDesignServices } from 'react-icons/md'
 import logo from '@/assets/SHOP.CO.png'
 import Container from '@/components/container'
 import CardAbout from './card-about'
+import AnimatedContent from '@/components/ui/react-bits/animated-content'
 
 export default function AboutPage() {
   return (
-    <Container classname="py-8 space-y-10">
-      <motion.div
-        className="text-center max-w-3xl mx-auto space-y-10"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <img className="mx-auto" src={logo} alt="SHOP.CO" />
+    <Container classname="py-8 space-y-10 px-4">
+      <AnimatedContent>
+        <img className="mx-auto mb-8" src={logo} alt="SHOP.CO" />
         <p className="text-lg text-gray-600 leading-relaxed">
           Oi! Eu me chamo{' '}
           <a
@@ -31,7 +26,7 @@ export default function AboutPage() {
           atrativo, meu objetivo foi criar uma aplicação funcional, com código
           limpo, usabilidade e boas práticas de ponta a ponta.
         </p>
-      </motion.div>
+      </AnimatedContent>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         <CardAbout
@@ -67,28 +62,20 @@ export default function AboutPage() {
         />
       </div>
 
-      <motion.div
-        className="bg-gray-100 p-8 rounded-2xl shadow-md border border-gray-200"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-2xl font-bold mb-4">
-          Por que esse projeto é especial pra mim?
-        </h2>
-        <p className="text-gray-700 leading-relaxed">
-          Porque ele junta tudo que eu gosto: design bonito, código limpo e uma
-          boa dose de desafio. Aqui, eu coloquei em prática não só o que sei,
-          mas também o que acredito: que tecnologia bem feita é aquela que
-          resolve problemas e entrega valor.
-        </p>
-        <p className="text-gray-700 mt-4 leading-relaxed">
-          Se você é recrutador ou alguém curioso por boas soluções, dá uma
-          olhada com carinho. Cada detalhe aqui tem uma razão de ser — e muito
-          aprendizado por trás.
-        </p>
-      </motion.div>
+      <h2 className="text-2xl font-bold mb-4">
+        Por que esse projeto é especial pra mim?
+      </h2>
+      <p className="text-gray-700 leading-relaxed">
+        Porque ele junta tudo que eu gosto: design bonito, código limpo e uma
+        boa dose de desafio. Aqui, eu coloquei em prática não só o que sei, mas
+        também o que acredito: que tecnologia bem feita é aquela que resolve
+        problemas e entrega valor.
+      </p>
+      <p className="text-gray-700 mt-4 leading-relaxed">
+        Se você é recrutador ou alguém curioso por boas soluções, dá uma olhada
+        com carinho. Cada detalhe aqui tem uma razão de ser — e muito
+        aprendizado por trás.
+      </p>
     </Container>
   )
 }
