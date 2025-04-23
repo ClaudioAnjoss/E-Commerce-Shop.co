@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Separator } from '../ui/shadcn/separator'
+import { Separator } from './ui/shadcn/separator'
 import { iProduct } from '@/interfaces/iProduct'
-import Rating from '../rating'
-import { Lens } from '../ui/magic-ui/lens'
+import Rating from './rating'
+import { Lens } from './ui/magic-ui/lens'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '@/store/features/cart'
 import { RootState } from '@/store'
-import { AnimatedSubscribeButton } from '../ui/magic-ui/animated-button-interation'
+import { AnimatedSubscribeButton } from './ui/magic-ui/animated-button-interation'
 
 interface iHandleQuantity {
   max: number

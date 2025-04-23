@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="bg-white border-b border-zinc-200 dark:border-zinc-800 h-20 flex items-center shadow-sm">
-      <Container classname="flex items-center justify-between gap-4">
+      <Container classname="flex items-center justify-between gap-4 px-4">
         <a href="/" className="min-w-[160px] hidden md:block">
           <img
             src={logo}
@@ -43,15 +43,6 @@ export default function Header() {
         <HeaderCollapse />
 
         <InputHeader />
-
-        {/* <div className="flex-grow max-w-sm hidden sm:flex">
-          <Input
-            id="search"
-            placeholder="Buscar produtos..."
-            icon={Search}
-            className="rounded-full bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-white placeholder:text-zinc-500"
-          />
-        </div> */}
 
         <CartHeader />
       </Container>

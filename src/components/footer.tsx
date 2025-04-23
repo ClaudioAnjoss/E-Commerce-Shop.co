@@ -32,13 +32,13 @@ export default function Footer() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="col-span-2 md:col-span-1 max-w-[300px]">
+          <div className=" col-span-2 md:col-span-1 max-w-[300px]">
             <img
               src={logo}
               alt="SHOP.CO"
               className="w-full max-w-[170px] object-contain"
             />
-            <p className="text-xs">
+            <p className="text-xs max-w-3xs">
               We have clothes that suits your style and which you’re proud to
               wear. From women to men.
             </p>

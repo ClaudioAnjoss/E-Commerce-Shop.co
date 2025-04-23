@@ -6,7 +6,6 @@ export async function getByParams(
   params: string,
 ): Promise<iProduct | iProduct[] | IResponse> {
   try {
-    console.log(`${URL}${params}`)
     if (params) {
       const res = await fetch(`${URL}${params}`)
 

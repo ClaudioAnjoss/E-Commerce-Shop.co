@@ -1,8 +1,8 @@
 import { SlidersVertical } from 'lucide-react'
-import { Button } from '@/components/ui/shadcn/button'
 import {
   Drawer,
   DrawerContent,
+  DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/shadcn/drawer'
 import { ReactNode } from 'react'
@@ -15,15 +15,13 @@ interface iMenuDrawer {
 export function MenuDrawer({ className, children }: iMenuDrawer) {
   return (
     <Drawer>
-      <DrawerTrigger asChild className={`${className}`}>
-        <Button
-          variant={'outline'}
-          className="rounded-full bg-gray-100 border-none"
-        >
-          <SlidersVertical />
-        </Button>
+      <DrawerTrigger className={`p-2  border-none ${className}`}>
+        <SlidersVertical />
       </DrawerTrigger>
-      <DrawerContent>{children}</DrawerContent>
+      <DrawerContent>
+        <DrawerTitle className="sr-only">Menu</DrawerTitle>
+        {children}
+      </DrawerContent>
     </Drawer>
   )
 }

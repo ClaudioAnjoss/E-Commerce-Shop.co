@@ -2,7 +2,7 @@ import { FaReact, FaShoppingCart, FaCode, FaGithub } from 'react-icons/fa'
 import { MdDesignServices } from 'react-icons/md'
 import logo from '@/assets/SHOP.CO.png'
 import Container from '@/components/container'
-import CardAbout from './card-about'
+import CardAbout from '../components/about-components/card-about'
 import AnimatedContent from '@/components/ui/react-bits/animated-content'
 
 export default function AboutPage() {

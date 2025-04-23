@@ -8,10 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Outlet } from 'react-router'
 import { Toaster } from 'sonner'
 
-export default function Structure() {
+export default function Layout() {
   const cart = useSelector((state: RootState) => state.cart)
   const [loaded, setLoaded] = useState(false)
   const dispatch = useDispatch()
+
+  console.log(
+    'Olá recrutador! 👀 Que bom te ver por aqui no console haha 😄 Espero que goste do meu site. Qualquer feedback é super bem-vindo!',
+  )
 
   useEffect(() => {
     const storedCart = loadCart()

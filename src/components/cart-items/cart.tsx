@@ -14,7 +14,6 @@ export default function Cart({ isHover }: iCart) {
   const { items, totalQuantity } = useSelector((state: RootState) => state.cart)
   const dispatch = useDispatch()
 
-  console.log(items)
   return (
     <div
       className={`min-w-fit flex flex-col ${!isHover && 'border'} rounded-4xl p-4 gap-4`}

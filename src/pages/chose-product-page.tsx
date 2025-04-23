@@ -1,5 +1,5 @@
-import { MenuDrawer } from './menu-drawer'
-import { FilteredProducts } from './filtered-product'
+import { MenuDrawer } from '../components/choose-product-components/menu-drawer'
+import { FilteredProducts } from '../components/choose-product-components/filtered-product'
 import { Link, useSearchParams } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import Rating from '@/components/rating'
@@ -89,10 +89,10 @@ export default function ChooseProduct() {
           <SplitText
             text={
               filters.category
-                ? `Filter: ${filters.category
+                ? filters.category
                     .replace(/womens|-|mens/g, '')
                     .replace('sportsaccessories', 'sports accessories')
-                    .toUpperCase()}`
+                    .toUpperCase()
                 : 'All'
             }
             className="font-semibold text-2xl"
@@ -114,7 +114,7 @@ export default function ChooseProduct() {
             />
           </MenuDrawer>
           <Button
-            variant={'outline'}
+            variant={'ghost'}
             className={`${hasFilters() ? 'block' : 'hidden'} cursor-pointer`}
             onClick={() => {
               setFilters(initialFilters)

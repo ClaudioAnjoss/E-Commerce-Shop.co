@@ -1,5 +1,5 @@
 import CardRating from '@/components/card-rating'
-import ClothingList from '@/components/clothing-list'
+import ClothingList from '@/components/clothing-list/clothing-list'
 import ProductDetails from '@/components/product-details'
 import { Button } from '@/components/ui/shadcn/button'
 import {

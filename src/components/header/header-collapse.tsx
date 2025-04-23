@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
-import { Sheet, SheetContent, SheetTrigger } from '../ui/shadcn/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '../ui/shadcn/sheet'
 import linksNavigation from '@/database/links-navigation-menu.json'
 import { Link, useLocation } from 'react-router'
 import logo from '@/assets/SHOP.CO.png'
@@ -11,10 +16,8 @@ export function HeaderCollapse() {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <button className="block md:hidden p-2 transition-transform hover:scale-110 active:scale-95">
-          <Menu size={28} />
-        </button>
+      <SheetTrigger className="block md:hidden  transition-transform hover:scale-110 active:scale-95">
+        <Menu size={28} />
       </SheetTrigger>
 
       <SheetContent
@@ -22,6 +25,7 @@ export function HeaderCollapse() {
         className="bg-white dark:bg-zinc-900 py-4 px-6 border-b border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg animate-in slide-in-from-top fade-in duration-300"
       >
         <div className="flex flex-col items-center gap-4">
+          <SheetTitle className="sr-only">Menu</SheetTitle>
           <a href="/" className="mb-2 transition-transform hover:scale-105">
             <img src={logo} alt="SHOP.CO" className="h-10" />
           </a>

@@ -1,6 +1,6 @@
 import { IReview } from '@/interfaces/iProduct'
 import { GrStatusGood } from 'react-icons/gr'
-import Rating from '../rating'
+import Rating from './rating'
 
 export default function CardRating({
   comment,
