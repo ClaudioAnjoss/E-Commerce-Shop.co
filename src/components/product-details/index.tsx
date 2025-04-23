@@ -69,9 +69,15 @@ export default function ProductDetails(item: iProduct) {
             <div className="bg-[#F0EEED] rounded-4xl w-full h-[290px] md:h-[370px] ">
               <img
                 src={selectedImage}
+                alt={'alt'}
+                className="w-full h-full object-contain blur-md transition-all duration-500 ease-out"
+                onLoad={(e) => e.currentTarget.classList.remove('blur-md')}
+              />
+              {/* <img
+                src={selectedImage}
                 alt={item.title}
                 className="w-full h-full object-contain "
-              />
+              /> */}
             </div>
           </Lens>
         </div>

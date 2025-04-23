@@ -1,14 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { Brands } from './components/brands'
-import Arrivals from './pages/arrivals'
 import CartPage from './pages/cart'
 import ChooseProduct from './pages/choose-product'
-import OnSale from './pages/on-sale'
 import Product from './pages/product'
-import ServicePage from './pages/service-page'
 import Shop from './pages/shop'
 import Structure from './pages/structure'
 import Home from './pages/home'
+import AboutPage from './pages/about/aboutPage'
 
 export default function MainRoutes() {
   return (
@@ -21,10 +18,7 @@ export default function MainRoutes() {
             <Route path=":id/:name" element={<Product />} />
             <Route path="cart" element={<CartPage />} />
           </Route>
-          <Route path="/on-sale" element={<OnSale />} />
-          <Route path="/services" element={<ServicePage />} />
-          <Route path="/arrivals" element={<Arrivals />} />
-          <Route path="/brands" element={<Brands />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
