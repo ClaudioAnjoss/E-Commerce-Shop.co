@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "name": "Clothing",
+    "image": "images/styles-menu/image-1.png",
+    "url": "clothing"
+  },
+  {
+    "id": 2,
+    "name": "Eyewear",
+    "image": "images/styles-menu/image-2.png",
+    "url": "eyewear"
+  },
+  {
+    "id": 3,
+    "name": "Fashion Accessories",
+    "image": "images/styles-menu/image-3.png",
+    "url": "fashion-accessories"
+  },
+  {
+    "id": 4,
+    "name": "Sports Equipments",
+    "image": "images/styles-menu/image-4.png",
+    "url": "sports-equipments"
+  }
+]
+
+  

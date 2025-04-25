@@ -1,9 +1,8 @@
 import Container from '@/components/container'
 import AnimatedContent from '@/components/ui/react-bits/animated-content'
-import { Button } from '@/components/ui/shadcn/button'
-
 import bgMain from '@/assets/bg-home-main.png'
 import { Link } from 'react-router'
+import ButtonBlack from '../button-black'
 
 export default function BannerHome() {
   return (
@@ -29,9 +28,7 @@ export default function BannerHome() {
               of style.
             </h2>
             <Link to={'/shop'}>
-              <Button className="rounded-3xl w-full md:max-w-[210px] py-6">
-                Shop Now
-              </Button>
+              <ButtonBlack className="md:max-w-[210px]">Shop Now</ButtonBlack>
             </Link>
 
             <ul className="grid grid-cols-2 md:grid-cols-3">

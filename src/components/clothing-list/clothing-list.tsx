@@ -1,10 +1,10 @@
-import { Button } from '../ui/shadcn/button'
 import Title from '../title'
 import { Link } from 'react-router'
 import SkeletonClothing from './skeleton-clothing-list'
 import { useQuery } from '@tanstack/react-query'
 import { getByParams } from '@/services/get-by-params'
 import { IResponse } from '@/interfaces/IResponse'
+import ButtonWhite from '../button-white'
 
 interface iClothingListProps {
   title?: string
@@ -57,12 +57,7 @@ export default function ClothingList({
       </div>
       {button && (
         <Link className="mx-auto" to={'/shop'}>
-          <Button
-            className="rounded-3xl text-lg px-20 py-6  border"
-            variant={'ghost'}
-          >
-            {button}
-          </Button>
+          <ButtonWhite>{button}</ButtonWhite>
         </Link>
       )}
     </div>
