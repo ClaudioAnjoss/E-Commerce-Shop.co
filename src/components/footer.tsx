@@ -1,12 +1,11 @@
 import { Facebook, Github, Instagram, Mail, Twitter } from 'lucide-react'
 import Container from './container'
 import { Input } from './ui/shadcn/input'
-import { Button } from './ui/shadcn/button'
 import links from '@/database/links-footer.json'
 import { Separator } from './ui/shadcn/separator'
-
 import logo from '@/assets/SHOP.CO.png'
 import flagCard from '@/assets/flag-card.png'
+import ButtonWhite from './button-white'
 
 export default function Footer() {
   return (
@@ -22,12 +21,9 @@ export default function Footer() {
               icon={Mail}
               className="rounded-4xl bg-white text-primary"
             />
-            <Button
-              className="rounded-4xl bg-white text-primary w-full mt-4 font-bold cursor-pointer"
-              variant={'ghost'}
-            >
+            <ButtonWhite className="rounded-4xl bg-white text-primary w-full mt-4 font-bold cursor-pointer py-2">
               Subscribe to Newsletter
-            </Button>
+            </ButtonWhite>
           </form>
         </div>
 
@@ -38,15 +34,15 @@ export default function Footer() {
               alt="SHOP.CO"
               className="w-full max-w-[170px] object-contain"
             />
-            <p className="text-xs max-w-3xs">
+            <p className="text-xs max-w-3xs my-2">
               We have clothes that suits your style and which you’re proud to
               wear. From women to men.
             </p>
             <div className="flex items-center gap-4 p-2 ">
-              <Twitter />
-              <Facebook />
-              <Instagram />
-              <Github />
+              <Twitter className="hover:scale-115 cursor-pointer transition-transform" />
+              <Facebook className="hover:scale-115 cursor-pointer transition-transform" />
+              <Instagram className="hover:scale-115 cursor-pointer transition-transform" />
+              <Github className="hover:scale-115 cursor-pointer transition-transform" />
             </div>
           </div>
 

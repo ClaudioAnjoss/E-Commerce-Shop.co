@@ -70,14 +70,10 @@ export default function ProductDetails(item: iProduct) {
               <img
                 src={selectedImage}
                 alt={'alt'}
+                loading="lazy"
                 className="w-full h-full object-contain blur-md transition-all duration-500 ease-out"
                 onLoad={(e) => e.currentTarget.classList.remove('blur-md')}
               />
-              {/* <img
-                src={selectedImage}
-                alt={item.title}
-                className="w-full h-full object-contain "
-              /> */}
             </div>
           </Lens>
         </div>
