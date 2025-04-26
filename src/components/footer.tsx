@@ -21,7 +21,10 @@ export default function Footer() {
               icon={Mail}
               className="rounded-4xl bg-white text-primary"
             />
-            <ButtonWhite className="rounded-4xl bg-white text-primary w-full mt-4 font-bold cursor-pointer py-2">
+            <ButtonWhite
+              type="button"
+              className="rounded-4xl bg-white text-primary w-full mt-4 font-bold cursor-pointer py-2"
+            >
               Subscribe to Newsletter
             </ButtonWhite>
           </form>

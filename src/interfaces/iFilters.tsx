@@ -5,4 +5,5 @@ export interface iFilters {
   rating: number
   tag: string
   brand: string
+  search: string
 }

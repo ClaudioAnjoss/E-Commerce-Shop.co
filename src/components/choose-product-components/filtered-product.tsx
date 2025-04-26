@@ -35,6 +35,8 @@ export function FilteredProducts({
     queryFn: getAllBrands,
   })
 
+  console.log(tags)
+
   return (
     <div
       className={`p-4 flex flex-col gap-2 border rounded-2xl ${isDrawer && 'max-h-[70dvh] overflow-auto'}`}

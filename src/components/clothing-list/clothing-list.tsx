@@ -56,7 +56,7 @@ export default function ClothingList({
           ))}
       </div>
       {button && (
-        <Link className="mx-auto" to={'/shop'}>
+        <Link className="mx-auto" to={`/shop?tag=${category}`}>
           <ButtonWhite>{button}</ButtonWhite>
         </Link>
       )}

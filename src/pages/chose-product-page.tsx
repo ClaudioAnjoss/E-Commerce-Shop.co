@@ -19,26 +19,36 @@ const initialFilters = {
   rating: 0,
   tag: '',
   brand: '',
+  search: '',
 }
 
 export default function ChooseProduct() {
   const [searchParams, setSearchParams] = useSearchParams()
   const search = searchParams.get('search')
+  const tagUrl = searchParams.get('tag')
   const [filters, setFilters] = useState<iFilters>(initialFilters)
   const { data: allProducts, isLoading } = useQuery({
     queryKey: ['all-products'],
     queryFn: getAllProducts,
   })
 
+  console.log(filters)
+
+  useEffect(() => {
+    if (search || tagUrl) {
+      setFilters((prev) => ({
+        ...prev,
+        search: search || '',
+        tag: tagUrl || '',
+      }))
+    }
+  }, [search, tagUrl])
+
   const filteredProducts = useMemo(() => {
     if (!allProducts?.products) return []
 
     return allProducts.products.filter((product) => {
-      const matchesSearch = search
-        ? product.title.toLowerCase().includes(search)
-        : true
-
-      const { category, price, discount, rating, tag, brand } = filters
+      const { category, price, discount, rating, tag, brand, search } = filters
 
       const matchesFilters =
         (!category || product.category === category) &&
@@ -50,11 +60,12 @@ export default function ChooseProduct() {
         (!brand ||
           (Array.isArray(brand)
             ? brand.includes(product.brand)
-            : product.brand === brand))
+            : product.brand === brand)) &&
+        (!search || product.title?.toLowerCase().includes(search.toLowerCase()))
 
-      return matchesSearch && matchesFilters
+      return matchesFilters
     })
-  }, [allProducts, filters, search])
+  }, [allProducts, filters])
 
   function hasFilters() {
     return JSON.stringify(filters) !== JSON.stringify(initialFilters) || search
@@ -119,6 +130,7 @@ export default function ChooseProduct() {
             onClick={() => {
               setFilters(initialFilters)
               searchParams.delete('search')
+              searchParams.delete('brands')
               setSearchParams(searchParams)
             }}
           >

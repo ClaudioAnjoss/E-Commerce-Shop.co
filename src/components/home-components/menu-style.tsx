@@ -15,7 +15,7 @@ export default function MenuStyle() {
             title={card.name}
             image={card.image}
             wide={index === 1 || index === 2}
-            navigation={`/shop?brands=${card.url.toLowerCase()}`}
+            navigation={`/shop?tag=${card.url.toLowerCase()}`}
           />
         ))}
       </div>

@@ -15,14 +15,12 @@
     "id": 3,
     "name": "Fashion Accessories",
     "image": "images/styles-menu/image-3.png",
-    "url": "fashion-accessories"
+    "url": "fashion accessories"
   },
   {
     "id": 4,
-    "name": "Sports Equipments",
+    "name": "Sports Equipment", 
     "image": "images/styles-menu/image-4.png",
-    "url": "sports-equipments"
+    "url": "sports equipment" 
   }
 ]
-
-  
